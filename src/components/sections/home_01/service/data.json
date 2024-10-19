@@ -1,0 +1,26 @@
+[
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-1.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-1.svg",
+    "title": "Обучение онлайн из дома",
+    "text": "Современные технологии предоставляют уникальную возможность учиться, не выходя из дома."
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-2.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-2.svg",
+    "title": "Поддержка 24/7",
+    "text": "Мы всегда готовы помочь вам! Наша служба поддержки доступна круглосуточно"
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-3.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-3.svg",
+    "title": "Профессиональный персонал",
+    "text": "Наши сотрудники - это команда крутых специалистов с многолетним опытом"
+  },
+  {
+    "icon_black": "assets/img/th-1/service-icon-black-4.svg",
+    "icon_orange": "assets/img/th-1/service-icon-orange-4.svg",
+    "title": "Честные цены",
+    "text": "Мы предлагаем прозрачные и честные цены без скрытых платежей."
+  }
+]

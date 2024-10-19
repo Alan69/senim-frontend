@@ -1,0 +1,134 @@
+.container {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 576px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 992px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+.button {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    overflow: hidden;
+    border-width: 1px;
+    border-color: #2124B1;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+.button::after {
+    position: absolute;
+    inset: 0px;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    transform-origin: top right;
+    --tw-scale-y: 0;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    content: var(--tw-content);
+    transition-duration: 300ms;
+    background-color: #2124B1;
+}
+
+.button:hover::after {
+    content: var(--tw-content);
+    --tw-scale-y: 1;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+
+/* Main Wrapper */
+
+.main-wrapper {
+    overflow: hidden;
+}
+
+.global-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1332px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.footer-text-slider {
+    animation: horizontal-slide-from-right-to-left 10s linear infinite normal forwards;
+}
+
+.horizontal-slide-from-right-to-left {
+    animation: horizontal-slide-from-right-to-left linear 10s infinite;
+}
+
+.horizontal-slide-from-left-to-right {
+    animation: horizontal-slide-from-left-to-right linear 10s infinite;
+}
+
+@keyframes horizontal-slide-from-right-to-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes horizontal-slide-from-left-to-right {
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.sticky-menu.nav-hidden {
+    animation: fadeInDown 0.9s 1;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
