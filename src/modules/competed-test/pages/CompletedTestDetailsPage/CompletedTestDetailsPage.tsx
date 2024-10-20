@@ -472,7 +472,7 @@ export const CompletedTestDetailsPage = () => {
               <FileSearchOutlined /> Работа над ошибками
             </span>
           }
-          key="2"
+          key="3"
         >
           <Card
             title={
