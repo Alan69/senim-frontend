@@ -1,0 +1,77 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6;
+
+  width: 100%;
+}
+
+.loginBox {
+  max-width: 700px; /* Сделали шире */
+  width: 100%;
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Более мягкая тень */
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02); /* Небольшое увеличение при наведении */
+  }
+}
+
+.title {
+  margin-bottom: 50px;
+  font-size: 36px; /* Увеличиваем заголовок */
+  color: #4cadd5; /* Цвет заголовка */
+}
+
+.formWrapper {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.submitButton {
+  background-color: #4cadd5;
+  border-color: #4cadd5;
+  font-weight: bold;
+  height: 50px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #3498db;
+    border-color: #3498db;
+  }
+}
+
+.linksWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link {
+  color: #3498db;
+  font-size: 16px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #4cadd5;
+    text-decoration: underline;
+  }
+}
+
+.signupWrapper {
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}

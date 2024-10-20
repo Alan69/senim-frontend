@@ -1,75 +1,91 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, DollarOutlined, ReloadOutlined } from '@ant-design/icons';
-import { TUser, useChangePasswordMutation, useGetAuthUserQuery, useUpdateBalanceMutation, useUpdateUserProfileMutation } from 'modules/user/redux/slices/api';
-import { ModalAddBalance } from '../components/ModalAddBalance/ModalAddBalance';
-import Title from 'antd/es/typography/Title';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Tabs, Form, Input, Button, message, Layout, Spin } from "antd";
+import { UserOutlined, LockOutlined, LoadingOutlined } from "@ant-design/icons";
+import {
+  TUser,
+  useChangePasswordMutation,
+  useGetAuthUserQuery,
+  useUpdateUserProfileMutation,
+} from "modules/user/redux/slices/api";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const { Content } = Layout;
 
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [selectedMenu, setSelectedMenu] = useState('personal-info');
+  const [selectedMenu, setSelectedMenu] = useState("personal-info");
 
-  const { data: user, isLoading: isUserLoading, refetch: refetchUser } = useGetAuthUserQuery();
-  const [updateUserProfile, { isLoading: isUpdating }] = useUpdateUserProfileMutation();
-  const [changePassword, { isLoading: isChangingPassword }] = useChangePasswordMutation();
-  const [updateBalance] = useUpdateBalanceMutation();
-  const [isBalanceModalOpen, setIsBalanceModalOpen] = useState(false);
+  const { data: user, isLoading: isUserLoading } = useGetAuthUserQuery();
+  const [updateUserProfile, { isLoading: isUpdating }] =
+    useUpdateUserProfileMutation();
+  const [changePassword, { isLoading: isChangingPassword }] =
+    useChangePasswordMutation();
 
   useEffect(() => {
-    if (location.pathname === '/profile' || location.pathname === '/profile/personal-info') {
-      setSelectedMenu('personal-info');
-    } else if (location.pathname === '/profile/update-password') {
-      setSelectedMenu('update-password');
-    } else if (location.pathname === '/profile/balance') {
-      setSelectedMenu('balance');
+    if (location.pathname.includes("personal-info")) {
+      setSelectedMenu("personal-info");
+    } else if (location.pathname.includes("update-password")) {
+      setSelectedMenu("update-password");
     }
   }, [location.pathname]);
 
   const handleProfileUpdate = async (values: TUser) => {
     try {
       await updateUserProfile(values).unwrap();
-      message.success('Профиль успешно обновлен!');
+      message.success("Профиль успешно обновлен!");
     } catch (error: any) {
       message.error(error.data.detail);
     }
   };
 
   const handlePasswordChange = async (values: any) => {
-    const { current_password, new_password, new_password2 } = values;
-
-    if (new_password !== new_password2) {
-      message.error('Пароли не совпадают!');
+    if (values.new_password !== values.new_password2) {
+      message.error("Пароли не совпадают!");
       return;
     }
-
     try {
-      await changePassword({ current_password, new_password, new_password2 }).unwrap();
-      message.success('Пароль успешно изменен!');
+      await changePassword(values).unwrap();
+      message.success("Пароль успешно изменен!");
     } catch (error: any) {
       message.error(error.data.detail);
     }
   };
 
-  const handleUpdateBalance = () => {
-    updateBalance().unwrap().then((res) => {
-      message.success(res.success)
-
-      refetchUser()
-    }).catch((error) => {
-      message.error(error.data.error)
-    })
-  }
+  const handleMenuClick = (key: string) => {
+    switch (key) {
+      case "personal-info":
+        navigate("/profile/personal-info");
+        break;
+      case "update-password":
+        navigate("/profile/update-password");
+        break;
+      default:
+        navigate("/profile");
+        break;
+    }
+  };
 
   const renderContent = () => {
-    if (!user) {
-      return <p>Загрузка данных...</p>;
-    }
+    if (!user)
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 128 }} spin />}
+          />
+        </div>
+      );
 
     switch (selectedMenu) {
-      case 'personal-info':
+      case "personal-info":
         return (
           <Form
             layout="vertical"
@@ -84,7 +100,7 @@ const ProfilePage = () => {
               school: user.school,
             }}
           >
-            <Form.Item label="Имя пользователя" name="username">
+            <Form.Item label="ИИН" name="username">
               <Input disabled={isUserLoading} />
             </Form.Item>
             <Form.Item label="Имя" name="first_name">
@@ -105,101 +121,96 @@ const ProfilePage = () => {
             <Form.Item label="Учреждение" name="school">
               <Input disabled={isUserLoading} />
             </Form.Item>
-            <Button type="primary" htmlType="submit" loading={isUpdating} disabled={isUserLoading}>
+            <Button type="primary" htmlType="submit" loading={isUpdating}>
               Сохранить изменения
             </Button>
           </Form>
         );
-      case 'update-password':
+      case "update-password":
         return (
           <Form layout="vertical" onFinish={handlePasswordChange}>
             <Form.Item
               label="Старый пароль"
               name="current_password"
-              rules={[{ required: true, message: 'Введите текущий пароль' }]}
+              rules={[{ required: true, message: "Введите текущий пароль" }]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item
               label="Новый пароль"
               name="new_password"
-              rules={[{ required: true, message: 'Введите новый пароль' }]}
+              rules={[{ required: true, message: "Введите новый пароль" }]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item
               label="Подтвердите новый пароль"
               name="new_password2"
-              rules={[{ required: true, message: 'Подтвердите новый пароль' }]}
+              rules={[{ required: true, message: "Подтвердите новый пароль" }]}
             >
               <Input.Password />
             </Form.Item>
-            <Button type="primary" htmlType="submit" loading={isChangingPassword}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isChangingPassword}
+            >
               Изменить пароль
             </Button>
           </Form>
-        );
-      case 'balance':
-        return (
-          <div>
-            <Title level={4}>Текущий баланс: {user.balance} KZT</Title>
-            <div style={{ display: 'flex', gap: '16px' }}>
-              <Button type="primary" onClick={() => setIsBalanceModalOpen(true)}>
-                Пополнить баланс
-              </Button>
-              <Button type="primary" onClick={handleUpdateBalance} icon={<ReloadOutlined />}>
-                Обновить баланс
-              </Button>
-            </div>
-          </div>
         );
       default:
         return null;
     }
   };
 
-  const handleMenuClick = (key: string) => {
-    switch (key) {
-      case 'personal-info':
-        navigate('/profile/personal-info');
-        break;
-      case 'update-password':
-        navigate('/profile/update-password');
-        break;
-      case 'balance':
-        navigate('/profile/balance');
-        break;
-      default:
-        navigate('/profile');
-        break;
-    }
-  };
-
   return (
-    <>
-      <div style={{ display: 'flex', padding: '20px', minHeight: '750px' }}>
-        <Menu
-          mode="inline"
-          style={{ width: 256 }}
-          selectedKeys={[selectedMenu]}
-          onClick={(e) => handleMenuClick(e.key)}
-        >
-          <Menu.Item key="personal-info" icon={<UserOutlined />}>
-            Персональная информация
-          </Menu.Item>
-          <Menu.Item key="update-password" icon={<LockOutlined />}>
-            Обновить пароль
-          </Menu.Item>
-          <Menu.Item key="balance" icon={<DollarOutlined />}>
-            Баланс
-          </Menu.Item>
-        </Menu>
-        <div style={{ flex: 1, padding: '20px', backgroundColor: '#fff' }}>
-          {renderContent()}
-        </div>
-      </div>
-      <ModalAddBalance isOpen={isBalanceModalOpen} setIsOpen={setIsBalanceModalOpen} />
-    </>
+    <Layout
+      style={{
+        padding: "24px",
+        minHeight: "750px",
+        backgroundColor: "#f0f2f5",
+      }}
+    >
+      <Tabs
+        centered
+        activeKey={selectedMenu}
+        onChange={(key) => {
+          setSelectedMenu(key);
+          handleMenuClick(key);
+        }}
+        tabBarStyle={{
+          fontWeight: "bold",
+        }}
+      >
+        <Tabs.TabPane
+          tab={
+            <span>
+              <UserOutlined /> Мой профиль
+            </span>
+          }
+          key="personal-info"
+        />
+        <Tabs.TabPane
+          tab={
+            <span>
+              <LockOutlined /> Изменить пароль
+            </span>
+          }
+          key="update-password"
+        />
+      </Tabs>
+
+      <Content
+        style={{
+          padding: "20px",
+          backgroundColor: "#fff",
+          borderRadius: "10px",
+        }}
+      >
+        {renderContent()}
+      </Content>
+    </Layout>
   );
 };
 

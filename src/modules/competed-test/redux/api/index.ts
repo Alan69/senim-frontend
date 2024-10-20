@@ -38,18 +38,19 @@ export interface TProduct {
 
 export interface TCompletedTestResponse {
   id: string;
-  finish_test_time: string | null;
-  start_test_time: string | null;
+  completed_date: string;
+  start_test_time: string;
   user: string;
   product: TProduct;
 }
 
 export interface TCompletedTestListResponse {
   id: string;
-  finish_test_time: string | null;
-  start_test_time: string | null;
+  start_test_time: string;
+  completed_date: string;
   user: string;
   product: TProduct;
+  correct_answers_count: number
 }
 
 export const completedTestApi = baseApi.injectEndpoints({

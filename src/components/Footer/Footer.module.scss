@@ -1,6 +1,137 @@
 .footer {
-    position: relative;
-    // bottom: 0;
-    // left: 0;
-    // right: 0;
+  position: relative;
+
+  &Top {
+    padding: 30px 0;
+    text-align: center;
+  }
+
+  &Slider {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &SliderItem {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  &SliderText {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #000;
+    @media (min-width: 1024px) {
+      font-size: 6rem;
+    }
+    @media (min-width: 1280px) {
+      font-size: 7rem;
+    }
+  }
+
+  &Middle {
+    .footerContent {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 30px;
+      padding: 30px 0;
+      @media (min-width: 1280px) {
+        grid-template-columns: 1fr auto auto 1fr;
+        gap: 50px;
+      }
+    }
+
+    .footerBlock {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footerLinks {
+      h4 {
+        font-size: 21px;
+        font-weight: bold;
+        color: #000;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .footerNewsletter {
+      h4 {
+        font-size: 21px;
+        font-weight: bold;
+        color: #000;
+      }
+
+      .newsletterForm {
+        position: relative;
+        max-width: 300px;
+      }
+
+      .newsletterInput {
+        padding: 18px;
+        border-radius: 50px;
+        border: 1px solid #000;
+        width: 100%;
+        outline: none;
+      }
+
+      .newsletterButton {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #000;
+        padding: 6px 12px;
+        border-radius: 50px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #ff6600;
+        }
+      }
+    }
+  }
+
+  &Bottom {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .orangeGradient1 {
+    position: absolute;
+    top: -290px;
+    right: 90px;
+    width: 406px;
+    height: 406px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 165, 0, 1) 0%,
+      rgba(255, 85, 0, 1) 100%
+    );
+    transform: rotate(-58deg);
+    border-radius: 50%;
+  }
+
+  .orangeGradient2 {
+    position: absolute;
+    top: -205px;
+    right: -200px;
+    width: 451px;
+    height: 451px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 165, 0, 1) 0%,
+      rgba(255, 85, 0, 1) 100%
+    );
+    transform: rotate(-58deg);
+    border-radius: 50%;
+  }
 }

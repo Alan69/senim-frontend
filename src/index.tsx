@@ -1,24 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import './page-layout.scss'
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import "./page-layout.scss";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { ConfigProvider } from "antd"; // Импорт ConfigProvider для кастомизации темы
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import './styles/vendors/menu.css';
-import './styles/style.css';
-import store from './redux/store.ts'
+import "./styles/style.css";
+import store from "./redux/store.ts";
+import theme from "./themeConfig"; // Импорт вашей темы
+import "./global.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ConfigProvider theme={theme}>
+          <App />
+        </ConfigProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

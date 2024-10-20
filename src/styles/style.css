@@ -3,16 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Post Custom Styles */
-
 body {
-    min-height: 100vh;
-    font-family: Inter, sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    line-height: 1.66;
-    --tw-text-opacity: 1;
-    color: rgb(25 25 25 / var(--tw-text-opacity));
+  min-height: 100vh;
+  font-family: Inter, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  line-height: 1.66;
+  --tw-text-opacity: 1;
+  color: rgb(25 25 25 / var(--tw-text-opacity));
 }
 
 h1,
@@ -21,543 +19,141 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: DM Sans, sans-serif;
+  font-family: DM Sans, sans-serif;
 }
 
 h1 {
-    font-size: 3rem;
-    line-height: 1;
+  font-size: 3rem;
+  line-height: 1;
 }
 
 @media (min-width: 768px) {
-    h1 {
-        font-size: 3.75rem;
-        line-height: 1;
-    }
+  h1 {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 992px) {
-    h1 {
-        font-size: 4.5rem;
-        line-height: 1;
-    }
+  h1 {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 1200px) {
-    h1 {
-        font-size: 100px;
-    }
+  h1 {
+    font-size: 100px;
+  }
 }
 
 @media (min-width: 1400px) {
-    h1 {
-        font-size: 120px;
-    }
+  h1 {
+    font-size: 120px;
+  }
 }
 
 h2 {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 @media (min-width: 992px) {
-    h2 {
-        font-size: 3.75rem;
-        line-height: 1;
-    }
+  h2 {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 1200px) {
-    h2 {
-        font-size: 4.5rem;
-        line-height: 1;
-    }
+  h2 {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 1400px) {
-    h2 {
-        font-size: 80px;
-    }
+  h2 {
+    font-size: 80px;
+  }
 }
 
 h4 {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-    line-height: 1.33;
-    letter-spacing: 0em;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  line-height: 1.33;
+  letter-spacing: 0em;
 }
 
 @media (min-width: 992px) {
-    h5 {
-        font-size: 28px;
-    }
+  h5 {
+    font-size: 28px;
+  }
 }
 
 h5 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    line-height: 1.28;
-}
-
-.payment-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  line-height: 1.28;
 }
 
 h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.step-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.step {
-    flex: 1;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.step.active .circle {
-    background: #2124B1;
-    color: white;
-}
-
-.circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-}
-
-.checkmark {
-    font-size: 14px;
-}
-
-.payment-method {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
-.exam-button,
-.tariff-button,
-.payment-method-button {
-    padding: 10px 20px;
-    border: 2px solid #2124B1;
-    border-radius: 5px;
-    background: white;
-    cursor: pointer;
-}
-
-.exam-button.selected,
-.tariff-button.selected,
-.payment-method-button.selected {
-    background: #2124B1;
-    color: white;
-}
-
-.summary {
-    text-align: left;
-    margin: 20px 0;
-}
-
-.summary p {
-    margin: 5px 0;
-}
-
-.next-button,
-.prev-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #2124B1;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
-}
-
-.test-container {
-    max-width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 200px;
-    margin-top: 40px;
-}
-
-.question-nav {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 60px;
-}
-
-.question-nav .nav-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #2124B1;
-    color: white;
-    cursor: pointer;
-    justify-content: space-between;
-    flex: none;
-}
-
-.test-container h3 {
-    font-size: 24px;
-    font-weight: 600;
-}
-
-.questions-list {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-}
-
-.question-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.question-btn {
-    margin: 5px;
-    padding: 10px 15px;
-    border: 2px solid #2124B1;
-    border-radius: 5px;
-    background: white;
-    cursor: pointer;
-}
-
-.navigation-buttons .nav-button {
-    flex: none;
-    margin-top: 30px;
-}
-
-.question-btn.selected {
-    background: #2124B1;
-    color: white;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .content {
-    text-align: left;
-}
-
-.answer-options {
-    margin-top: 20px;
-}
-
-.answer-options label {
-    display: block;
-    margin: 10px 0;
-}
-
-.navigation-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.question-text p {
-    font-size: 24px;
-}
-
-.navigation-buttons .nav-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #2124B1;
-    color: white;
-    cursor: pointer;
-}
-
-.payment-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.payment-container .content h3 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 28px;
-    margin-top: 30px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
+  text-align: left;
 }
 
 h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.step-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    position: relative;
+.blue-gradient-1 {
+  background: radial-gradient(50% 50% at 50% 50%, #b5b6f1 0%, #7375cc 100%);
+  filter: blur(55px);
 }
 
-.line {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #ccc;
-    z-index: -1;
+.blue-gradient-2 {
+  background: radial-gradient(50% 50% at 50% 50%, #abadf7 0%, #7375cc 100%);
+  filter: blur(55px);
 }
 
-.step {
-    flex: 1;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+.blue-gradient-1 {
+  background: radial-gradient(50% 50% at 50% 50%, #2124b1 0%, #4c5bd4 100%);
+  filter: blur(55px);
+  position: absolute;
+  border-radius: 50%;
 }
 
-.step.active .circle {
-    background: #2124B1;
-    color: white;
-}
-
-.circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-}
-
-.checkmark {
-    font-size: 14px;
-}
-
-.payment-method {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
-.exam-button,
-.tariff-button,
-.payment-method-button {
-    padding: 10px 20px;
-    border: 2px solid #2124B1;
-    border-radius: 5px;
-    background: white;
-    cursor: pointer;
-}
-
-.exam-button.selected,
-.tariff-button.selected,
-.payment-method-button.selected {
-    background: #2124B1;
-    color: white;
-}
-
-.summary {
-    text-align: left;
-    margin: 20px 0;
-}
-
-.summary p {
-    margin: 5px 0;
+.blue-gradient-2 {
+  background: radial-gradient(50% 50% at 50% 50%, #4c5bd4 0%, #2124b1 100%);
+  filter: blur(55px);
+  position: absolute;
+  border-radius: 50%;
 }
 
 .next-button,
 .prev-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #2124B1;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
-}
-
-.blue-gradient-1 {
-    background: radial-gradient(50% 50% at 50% 50%, #b5b6f1 0%, #7375cc 100%);
-    filter: blur(55px);
-}
-
-.blue-gradient-2 {
-    background: radial-gradient(50% 50% at 50% 50%, #abadf7 0%, #7375cc 100%);
-    filter: blur(55px);
-}
-
-
-/* Styles for the background with gradients and balls */
-
-.test-page {
-    position: relative;
-    background: linear-gradient(135deg, #c4c5ff 0%, #4c5bd4 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.blue-gradient-1 {
-    background: radial-gradient(50% 50% at 50% 50%, #2124B1 0%, #4c5bd4 100%);
-    filter: blur(55px);
-    position: absolute;
-    border-radius: 50%;
-}
-
-.blue-gradient-2 {
-    background: radial-gradient(50% 50% at 50% 50%, #4c5bd4 0%, #2124B1 100%);
-    filter: blur(55px);
-    position: absolute;
-    border-radius: 50%;
-}
-
-
-/* Centering the test content */
-
-.test-container {
-    background: white;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 900px;
-    z-index: 10;
-}
-
-
-/* Ensure these styles are included in your CSS file */
-
-.payment-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.step-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.line {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #ccc;
-    z-index: -1;
-}
-
-.step {
-    flex: 1;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.step.active .circle {
-    background: #2124B1;
-    color: white;
-}
-
-.circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-}
-
-.checkmark {
-    font-size: 14px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.next-button,
-.prev-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: #2124B1;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #2124b1;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
 }
 
 .form-group {
-    margin-bottom: 20px;
-}
-
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  margin-bottom: 20px;
 }
 
 .form-check {
-    margin: 10px;
-}
-
-.form-check-input {
-    margin-right: 10px;
-}
-
-.mt-3 {
-    margin-top: 20px;
+  margin: 10px;
 }
 
 .text-danger {
-    color: red;
-}
-
-.main-wrapper {
-    background: linear-gradient(135deg, #c4c5ff 0%, #4c5bd4 100%);
+  color: red;
 }

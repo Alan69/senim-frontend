@@ -1,0 +1,137 @@
+/* Кнопки */
+.ant-btn-primary {
+  background-color: #4cadd5; /* Основной бирюзовый цвет кнопок */
+  border-color: #4cadd5; /* Границы кнопок */
+  color: #ffffff; /* Белый текст на кнопке */
+  box-shadow: none !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: #3498db; /* Насыщенный синий при наведении */
+  border-color: #3498db;
+}
+
+.ant-btn-default {
+  background-color: #f3f4f6; /* Светло-серый фон для дефолтных кнопок */
+  border-color: #e5e7eb; /* Цвет границы */
+  color: rgba(0, 0, 0, 0.85); /* Основной цвет текста */
+}
+
+.ant-btn-default:hover {
+  background-color: #e5e7eb; /* Цвет фона при наведении */
+  border-color: #4cadd5; /* Бирюзовый при наведении */
+}
+
+/* Layout - Заголовок и боковая панель */
+.ant-layout-header {
+  background-color: #3498db; /* Синий цвет для header */
+  color: #ffffff; /* Белый текст */
+}
+
+.ant-layout-sider {
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 20px rgb(52 152 219 / 30%); /* Более мягкая тень */
+}
+
+.sider-toggle-btn {
+  background-color: #ffffff;
+  color: #4cadd5; /* Бирюзовый цвет иконки переключателя */
+}
+
+.menu-item-active {
+  background-color: #ffffff; /* Белый фон активного элемента */
+  color: #4cadd5; /* Бирюзовый цвет текста активного элемента */
+}
+
+.icon-active {
+  color: #4cadd5; /* Цвет активных иконок */
+}
+
+/* Основные стили для контента */
+.content {
+  padding: 20px;
+}
+
+/* Поля ввода */
+.ant-input {
+  background-color: #ffffff; /* Белый фон для полей ввода */
+  border-color: #e5e7eb; /* Светло-серая граница */
+  color: rgba(0, 0, 0, 0.85); /* Основной цвет текста */
+}
+
+.ant-input:hover,
+.ant-input-focused {
+  border-color: #4cadd5; /* Бирюзовая граница при наведении и фокусе */
+}
+
+/* Таблицы */
+.ant-table-thead > tr > th {
+  background-color: #f3f4f6; /* Светло-серый фон для заголовков таблиц */
+  color: rgba(0, 0, 0, 0.85); /* Основной цвет текста */
+}
+
+.ant-table-row:hover {
+  background-color: #e5e7eb; /* Светло-серый фон строки при наведении */
+}
+
+/* Модальные окна */
+.ant-modal-header {
+  background-color: #4cadd5; /* Бирюзовый цвет для заголовка модального окна */
+  color: #ffffff; /* Белый текст */
+}
+
+.ant-modal-content {
+  background-color: #ffffff; /* Белый фон для модального окна */
+}
+
+/* Tooltip */
+.ant-tooltip-inner {
+  background-color: #3498db; /* Синий цвет для тултипов */
+  color: #ffffff; /* Белый текст */
+}
+
+/* Шрифты */
+body {
+  font-family: "Involve", Arial, sans-serif; /* Основной шрифт Involve */
+  background-color: #ffffff; /* Белый фон для страницы */
+  color: rgba(0, 0, 0, 0.85); /* Основной цвет текста */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #3498db; /* Синий для заголовков */
+}
+
+.ant-typography {
+  color: rgba(0, 0, 0, 0.85); /* Основной цвет текста */
+}
+
+.ant-typography-secondary {
+  color: rgba(0, 0, 0, 0.45); /* Второстепенный цвет текста */
+}
+
+/* Ссылки */
+a {
+  color: #3498db; /* Синий цвет ссылок */
+}
+
+a:hover {
+  color: #4cadd5; /* Бирюзовый при наведении */
+}
+
+.ant-menu-item-selected {
+  color: #ffffff !important; /* Белый цвет текста */
+}
+
+/* Пункты меню */
+.ant-menu-item {
+  color: #ffffff; /* Белый текст в пунктах меню */
+}
+
+.ant-menu-item:hover {
+  color: #ffffff; /* Белый текст */
+}

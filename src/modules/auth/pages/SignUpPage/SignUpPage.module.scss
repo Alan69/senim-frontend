@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6;
+
+  width: 100%;
+}
+
+.signupBox {
+  max-width: 600px; /* Уменьшена ширина формы */
+  width: 100%;
+  background-color: #fff;
+  padding: 40px; /* Уменьшены отступы */
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Уменьшена тень */
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.title {
+  margin-bottom: 20px; /* Уменьшен отступ для заголовка */
+  font-size: 28px; /* Уменьшен размер шрифта заголовка */
+  color: #4cadd5;
+}
+
+.formWrapper {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Уменьшены отступы между элементами */
+}
+
+.submitButton {
+  background-color: #4cadd5;
+  border-color: #4cadd5;
+  height: 48px; /* Уменьшена высота кнопки */
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #3498db;
+    border-color: #3498db;
+  }
+}
+
+.loginLink {
+  margin-top: 20px; /* Уменьшен отступ сверху */
+  text-align: center;
+  font-weight: bold;
+}
+
+.link {
+  color: #3498db;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #4cadd5;
+    text-decoration: underline;
+  }
+}

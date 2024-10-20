@@ -1,90 +1,83 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Layout, Skeleton } from 'antd';
-import Title from 'antd/es/typography/Title';
-import cn from 'classnames';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Layout, Table, Skeleton, Typography, ConfigProvider } from "antd";
+import { useGetCompletedTestListQuery } from "modules/competed-test/redux/api";
+import ruRU from "antd/es/locale/ru_RU";
 
-import { useGetCompletedTestListQuery } from 'modules/competed-test/redux/api';
-import { useLazyGetAuthUserQuery } from 'modules/user/redux/slices/api';
-import styles from './CompletedTestListPage.module.scss';
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 
 const { Content } = Layout;
+const { Title } = Typography;
 
 export const CompletedTestListPage = () => {
-  const [getAuthUser] = useLazyGetAuthUserQuery();
   const { data: testList, isLoading, refetch } = useGetCompletedTestListQuery();
+
+  const formatCompletionDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return format(date, "dd MMMM yyyy, HH:mm", { locale: ru });
+  };
 
   useEffect(() => {
     refetch();
   }, [refetch]);
 
-  useEffect(() => {
-    getAuthUser();
-  }, []);
+  const columns = [
+    {
+      title: "Название теста",
+      dataIndex: ["product", "title"],
+      key: "title",
+      sorter: (a: any, b: any) =>
+        a.product.title.localeCompare(b.product.title),
+    },
+    {
+      title: "Дата начала",
+      dataIndex: "start_test_time",
+      key: "start_test_time",
+      render: (start_test_time: string) =>
+        formatCompletionDate(start_test_time),
+      sorter: (a: any, b: any) =>
+        new Date(a.start_test_time).getTime() -
+        new Date(b.start_test_time).getTime(),
+    },
+    {
+      title: "Дата завершения",
+      dataIndex: "completed_date",
+      key: "completed_date",
+      render: (completed_date: string) => formatCompletionDate(completed_date),
+      sorter: (a: any, b: any) =>
+        new Date(a.completed_date).getTime() -
+        new Date(b.completed_date).getTime(),
+    },
+    {
+      title: "",
+      key: "actions",
+      render: (record: any) => (
+        <Link to={`/completed-test/${record.id}`}>
+          Перейти к {record.product.title}
+        </Link>
+      ),
+    },
+  ];
 
   return (
-    <Layout>
-      <Content className='page-layout'>
-        <Title level={1}>Результаты</Title>
-        <div className={styles.list}>
-          <div className={styles.list__item}>
-            <div className={styles.list__item__title}>
-              Название теста
-            </div>
-            <div className={styles.list__item__additional}>
-              <div className={styles.list__item__additional__cell}>
-                Набранные баллы
-              </div>
-              <div className={styles.list__item__additional__cell}>
-                Время
-              </div>
-              <div className={styles.list__item__additional__cell}>
-                Дата завершения
-              </div>
-              <div className={styles.list__item__additional__cell}></div>
-            </div>
-          </div>
-
+    <ConfigProvider locale={ruRU}>
+      <Layout>
+        <Content className="page-layout">
+          <Title level={1}>Результаты тестов</Title>
           {isLoading ? (
-            <>
-              {[...Array(5)].map((_, index) => (
-                <div key={index} className={styles.list__item}>
-                  <Skeleton.Input
-                    active
-                    style={{ height: '40px' }}
-                    block
-                  />
-                </div>
-              ))}
-            </>
+            <Skeleton active paragraph={{ rows: 5 }} />
           ) : (
-            testList?.map((el) => (
-              <div key={el.id} className={styles.list__item}>
-                <div className={styles.list__item__title}>
-                  {el.product.title}
-                </div>
-                <div className={styles.list__item__additional}>
-                  <div className={styles.list__item__additional__cell}>
-                    {el.correct_answers_count}
-                  </div>
-                  <div className={styles.list__item__additional__cell}>
-                    {el.completed_date}
-                  </div>
-                  <div className={styles.list__item__additional__cell}>
-                    {el.finish_test_time}
-                  </div>
-                  <Link
-                    to={`/completed-test/${el.id}`}
-                    className={cn(styles.list__item__additional__cell, styles.list__item__additional__button)}
-                  >
-                    Подробнее
-                  </Link>
-                </div>
-              </div>
-            ))
+            <Table
+              dataSource={testList}
+              columns={columns}
+              rowKey="id"
+              pagination={{ pageSize: 10, position: ["bottomCenter"] }} // Центрируем пагинацию
+              bordered
+            />
           )}
-        </div>
-      </Content>
-    </Layout>
+        </Content>
+      </Layout>
+    </ConfigProvider>
   );
 };

@@ -1,20 +1,30 @@
-import { Spin } from 'antd';
-import React, { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-import styles from './UnauthorisedLayout.module.scss';
-import Footer from 'components/Footer/Footer';
-import Header from 'components/Header/Header';
+import { Spin, Layout } from "antd";
+import React, { Suspense } from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "components/Footer/Footer";
+import Header from "components/Header/Header";
+
+const { Content } = Layout;
 
 export const UnauthorisedLayout = () => {
   return (
-    <div className={styles.layout}>
+    <Layout>
       <Header />
-      <main className={styles.main} >
-        <Suspense fallback={<Spin size="small" />}>
+      <Content
+        style={{
+          padding: "24px",
+          paddingTop: "64px",
+          minHeight: "100vh",
+          backgroundColor: "#F0F2F5",
+        }}
+      >
+        <Suspense fallback={<Spin size="large" />}>
           <Outlet />
         </Suspense>
-      </main>
+      </Content>
       <Footer />
-    </div>
+    </Layout>
   );
 };
+
+export default UnauthorisedLayout;

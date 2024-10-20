@@ -1,115 +1,98 @@
 .title {
-    margin-bottom: 64px;
-    color: var(--black, #343434);
-    text-align: center;
-    font-family: 'Gilroy';
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
+  margin-bottom: 64px;
+  color: var(--black, #343434);
+  text-align: center;
+  font-family: "Gilroy";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .product {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    &__item {
-        width: calc(33.3333% - 10px);
-        padding: 32px;
-        border-radius: 16px;
-        background: linear-gradient(90deg, #C7A9FF 0%, #8D9CFC 100%);
-        // &:nth-child(3n+1) {
-        //     background: linear-gradient(90deg, #C7A9FF 0%, #8D9CFC 100%);
-        //     .product__item__button {
-        //         color: #8E9DFD;
-        //     }
-        // }
-        // &:nth-child(3n+2) {
-        //     background: linear-gradient(90deg, #84C1EB 0%, #39C6B7 100%);
-        //     .product__item__button {
-        //         color: #3AC7B8;
-        //     }
-        // }
-        // &:nth-child(3n+3) {
-        //     background: linear-gradient(90deg, #F28CA8 0%, #F48981 100%);
-        //     .product__item__button {
-        //         color: #F58A82;
-        //     }
-        // }
-        &__content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        &__descr {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        &__subtitleBlock {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        &__title {
-            color: var(--White, #FFF);
-            font-family: Gilroy;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        &__subtitle {
-            color: var(--White, #FFF);
-            font-family: Gilroy;
-            font-size: 20px;
-            font-weight: 700;
-        }
-        &__text {
-            color: var(--White, #FFF);
-            font-family: Gilroy;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        &__button {
-            margin-top: 30px;
-            display: block;
-            width: 100%;
-            padding: 20px 32px;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            background: #FFF;
-            color: #8E9DFD;
-            font-family: Gilroy;
-            font-size: 16px;
-            font-weight: 500;
-            text-align: center;
-            transition: 0.3s all;
-            &:hover {
-                border: 1px solid #fff;
-                background: transparent;
-                color: #fff !important;
-            }
-            &__disabled {
-                cursor: not-allowed;
-                background: var(--Line, rgba(0, 0, 0, 0.10)) !important;
-                color: var(--White, #FFF);
-                &:hover {
-                    border: 1px solid var(--Line, rgba(0, 0, 0, 0.10));
-                }
-            }
-        }
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  &__item {
+    width: calc(33.3333% - 10px);
+    padding: 32px;
+    border-radius: 16px;
+    background: #3498db;
+
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+    &__descr {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    &__subtitleBlock {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    &__title {
+      color: var(--White, #fff);
+      font-family: Gilroy;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    &__subtitle {
+      color: var(--White, #fff);
+      font-family: Gilroy;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    &__text {
+      color: var(--White, #fff);
+      font-family: Gilroy;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    &__button {
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      padding: 20px 32px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: #fff;
+      color: #3498db;
+      font-family: Gilroy;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      transition: 0.3s all;
+      &:hover {
+        border: 1px solid #fff;
+        background: transparent;
+        color: #fff !important;
+      }
+      &__disabled {
+        cursor: not-allowed;
+        background: var(--Line, rgba(0, 0, 0, 0.1)) !important;
+        color: var(--White, #fff);
+        &:hover {
+          border: 1px solid var(--Line, rgba(0, 0, 0, 0.1));
+        }
+      }
+    }
+  }
 }
 
 .divider {
-    height: 20px;
-    width: 1px;
-    opacity: 0.5;
-    background: var(--White, #FFF);
+  height: 20px;
+  width: 1px;
+  opacity: 0.5;
+  background: var(--White, #fff);
 }
 
 .loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
 }
