@@ -9,24 +9,24 @@
 }
 
 .loginBox {
-  max-width: 700px; /* Сделали шире */
+  max-width: 700px;
   width: 100%;
   background-color: #fff;
   padding: 50px;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Более мягкая тень */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease-in-out;
 
   &:hover {
-    transform: scale(1.02); /* Небольшое увеличение при наведении */
+    transform: scale(1.02);
   }
 }
 
 .title {
   margin-bottom: 50px;
-  font-size: 36px; /* Увеличиваем заголовок */
-  color: #4cadd5; /* Цвет заголовка */
+  font-size: 36px;
+  color: #4cadd5;
 }
 
 .formWrapper {

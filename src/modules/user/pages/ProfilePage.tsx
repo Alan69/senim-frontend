@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Tabs, Form, Input, Button, message, Layout, Spin } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Tabs, Form, Input, Button, message, Layout, Spin, Select } from "antd";
 import { UserOutlined, LockOutlined, LoadingOutlined } from "@ant-design/icons";
+import InputMask from "react-input-mask";
 import {
   TUser,
   useChangePasswordMutation,
   useGetAuthUserQuery,
   useUpdateUserProfileMutation,
 } from "modules/user/redux/slices/api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useGetRegionListQuery } from "../../../redux/api/regionsApi";
 
 const { Content } = Layout;
+const { Option } = Select;
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -18,22 +21,23 @@ const ProfilePage = () => {
   const [selectedMenu, setSelectedMenu] = useState("personal-info");
 
   const { data: user, isLoading: isUserLoading } = useGetAuthUserQuery();
+  const { data: regions, isLoading: isRegionsLoading } =
+    useGetRegionListQuery();
   const [updateUserProfile, { isLoading: isUpdating }] =
     useUpdateUserProfileMutation();
   const [changePassword, { isLoading: isChangingPassword }] =
     useChangePasswordMutation();
 
-  useEffect(() => {
-    if (location.pathname.includes("personal-info")) {
-      setSelectedMenu("personal-info");
-    } else if (location.pathname.includes("update-password")) {
-      setSelectedMenu("update-password");
-    }
-  }, [location.pathname]);
-
   const handleProfileUpdate = async (values: TUser) => {
+    const phoneNumber = values.phone_number.replace(/\D/g, "");
+
     try {
-      await updateUserProfile(values).unwrap();
+      await updateUserProfile({
+        ...values,
+        phone_number: phoneNumber,
+        // @ts-ignore
+        region: values.region.id,
+      }).unwrap();
       message.success("Профиль успешно обновлен!");
     } catch (error: any) {
       message.error(error.data.detail);
@@ -100,28 +104,120 @@ const ProfilePage = () => {
               school: user.school,
             }}
           >
-            <Form.Item label="ИИН" name="username">
+            <Form.Item
+              label="ИИН"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, введите ИИН!",
+                },
+                {
+                  pattern: /^\d{12}$/,
+                  message: "ИИН должен состоять из 12 цифр!",
+                },
+              ]}
+            >
+              <Input disabled={isUserLoading} maxLength={12} />
+            </Form.Item>
+            <Form.Item
+              label="Имя"
+              name="first_name"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, введите имя!",
+                },
+              ]}
+            >
               <Input disabled={isUserLoading} />
             </Form.Item>
-            <Form.Item label="Имя" name="first_name">
+            <Form.Item
+              label="Фамилия"
+              name="last_name"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, введите фамилию!",
+                },
+              ]}
+            >
               <Input disabled={isUserLoading} />
             </Form.Item>
-            <Form.Item label="Фамилия" name="last_name">
+            <Form.Item
+              label="Почта"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  type: "email",
+                  message: "Пожалуйста, введите корректный email!",
+                },
+              ]}
+            >
               <Input disabled={isUserLoading} />
             </Form.Item>
-            <Form.Item label="Почта" name="email">
+
+            <Form.Item
+              label="Телефон"
+              name="phone_number"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, введите номер телефона!",
+                },
+              ]}
+            >
+              <InputMask
+                mask="+7 999 999 99 99"
+                placeholder="+7 777 777 77 77"
+                disabled={isUserLoading}
+              >
+                {/* @ts-ignore */}
+                {(inputProps) => <Input {...inputProps} />}
+              </InputMask>
+            </Form.Item>
+
+            <Form.Item
+              label="Регион"
+              name="region"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, выберите регион!",
+                },
+              ]}
+            >
+              <Select
+                placeholder="Выберите регион"
+                loading={isRegionsLoading}
+                disabled={isUserLoading}
+              >
+                {regions?.map((region) => (
+                  <Option key={region.id} value={region.id}>
+                    {region.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Учреждение"
+              name="school"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, введите учреждение!",
+                },
+              ]}
+            >
               <Input disabled={isUserLoading} />
             </Form.Item>
-            <Form.Item label="Телефон" name="phone_number">
-              <Input disabled={isUserLoading} />
-            </Form.Item>
-            <Form.Item label="Регион" name="region">
-              <Input disabled={isUserLoading} />
-            </Form.Item>
-            <Form.Item label="Учреждение" name="school">
-              <Input disabled={isUserLoading} />
-            </Form.Item>
-            <Button type="primary" htmlType="submit" loading={isUpdating}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isUpdating}
+              disabled={isUserLoading}
+            >
               Сохранить изменения
             </Button>
           </Form>
@@ -163,6 +259,14 @@ const ProfilePage = () => {
         return null;
     }
   };
+
+  useEffect(() => {
+    if (location.pathname.includes("personal-info")) {
+      setSelectedMenu("personal-info");
+    } else if (location.pathname.includes("update-password")) {
+      setSelectedMenu("update-password");
+    }
+  }, [location.pathname]);
 
   return (
     <Layout

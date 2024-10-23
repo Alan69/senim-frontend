@@ -1,11 +1,18 @@
 import baseApi from '../../../../redux/api/index';
 
+export enum ProductType {
+  STUDENT= "STUDENT",
+  TEACHER = "TEACHER"
+}
+
 type TProductResponse = {
   id: string;
   title: string;
   sum: number;
   time: number;
   subject_limit: number;
+  description: string;
+  product_type: ProductType
 }
 
 type TSubjectResponse = {

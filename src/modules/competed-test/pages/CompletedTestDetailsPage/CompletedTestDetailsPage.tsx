@@ -18,7 +18,7 @@ const { Title, Text } = Typography;
 export const CompletedTestDetailsPage = () => {
   const { id } = useParams();
   const [getAuthUser] = useLazyGetAuthUserQuery();
-  const { data } = useGetCompletedTestByIdQuery(id);
+  const { data, isLoading } = useGetCompletedTestByIdQuery(id);
 
   const formatTimeDifference = (startTime: string, endTime: string) => {
     const startDate = new Date(startTime);

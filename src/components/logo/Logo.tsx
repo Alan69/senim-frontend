@@ -1,22 +1,18 @@
-import { Link } from 'react-router-dom';
-import logoDark from 'assets/img/logo-dark.png';
-import logoLight from 'assets/img/logo-light.png';
-import { useTypedSelector } from 'hooks/useTypedSelector';
+import { Link } from "react-router-dom";
+import logoDark from "assets/img/logo-dark.png";
 
 const LogoDark = () => {
-  // const { user } = useTypedSelector((state) => state.auth);
-
   return (
-    <Link
-      to='/'
-    // style={{ pointerEvents: user?.test_is_started ? 'none' : 'unset' }}
-    >
+    <Link to="/">
       <img
         src={logoDark}
-        alt='AIMass'
-        width='96'
-        height='24'
-      // style={{ pointerEvents: user?.test_is_started ? 'none' : 'unset' }}
+        alt="AIMass"
+        style={{
+          filter:
+            "invert(0%) sepia(0%) saturate(12%) hue-rotate(41deg) brightness(96%) contrast(101%)",
+        }}
+        width="96"
+        height="32"
       />
     </Link>
   );

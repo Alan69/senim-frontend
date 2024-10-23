@@ -1,60 +1,111 @@
-import React, { useState } from 'react';
-import { Button, Modal, Typography } from 'antd';
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import styles from './ModalFinishTest.module.scss'
+import React from "react";
+import { Button, Modal, Typography, Tabs } from "antd";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import styles from "./ModalFinishTest.module.scss";
 
 type TProps = {
-  isOpen: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  isOpen: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   unansweredQuestions: {
     testTitle: string;
     questionNumber: number;
     questionId: string;
-  }[]
-  handleCompleteTest: () => Promise<void>
-  isCompleting: boolean
-}
+  }[];
+  handleCompleteTest: () => Promise<void>;
+  isCompleting: boolean;
+};
 
 export const ModalFinishTest = ({
   isOpen,
   setOpen,
   unansweredQuestions,
   handleCompleteTest,
-  isCompleting
+  isCompleting,
 }: TProps) => {
   const handleCancel = () => {
     setOpen(false);
   };
 
+  // Группировка вопросов по предметам
+  const groupedQuestions = unansweredQuestions.reduce((acc, question) => {
+    if (!acc[question.testTitle]) {
+      acc[question.testTitle] = [];
+    }
+    acc[question.testTitle].push(question);
+    return acc;
+  }, {} as Record<string, { testTitle: string; questionNumber: number; questionId: string }[]>);
+
+  const tabItems = Object.entries(groupedQuestions).map(
+    ([subject, questions], index) => ({
+      key: subject,
+      label: subject,
+      children: (
+        <ul className={styles.questionList}>
+          {questions.map((item, idx) => (
+            <li key={idx} className={styles.questionItem}>
+              Вопрос {item.questionNumber}
+            </li>
+          ))}
+        </ul>
+      ),
+    })
+  );
+
   return (
     <Modal
       open={isOpen}
-      title={<Typography.Title level={3}> <ExclamationCircleFilled className={styles.icon} /> Вы действительно хотите завершить тест?</Typography.Title>}
+      title={
+        <Typography.Title level={3} className={styles.title}>
+          <ExclamationCircleFilled className={styles.iconWarning} /> Подтвердите
+          завершение теста
+        </Typography.Title>
+      }
       onCancel={handleCancel}
       footer={[
-        <Button key="back" onClick={handleCancel} disabled={isCompleting}>
+        <Button
+          key="back"
+          onClick={handleCancel}
+          disabled={isCompleting}
+          className={styles.cancelButton}
+        >
           Закрыть
         </Button>,
-        <Button key="submit" type="primary" loading={isCompleting} onClick={() => {
-          handleCompleteTest()
-        }}>
+        <Button
+          key="submit"
+          type="primary"
+          loading={isCompleting}
+          onClick={() => {
+            handleCompleteTest();
+          }}
+          className={styles.submitButton}
+        >
           Завершить
         </Button>,
       ]}
-      width={600}
+      width={700}
     >
       {unansweredQuestions.length > 0 && (
         <div className={styles.unansweredQuestions}>
-          <h3>У вас неотвеченных ({unansweredQuestions.length}) вопросов:</h3>
-          <ul>
-            {unansweredQuestions.map((item, index) => (
-              <li key={index}>
-                {item.testTitle}: Вопрос {item.questionNumber}
-              </li>
+          <Typography.Title level={4} className={styles.subtitle}>
+            Внимание! У вас неотвеченных вопросов:{" "}
+            <span className={styles.unansweredCount}>
+              {unansweredQuestions.length}
+            </span>
+          </Typography.Title>
+
+          <Tabs
+            defaultActiveKey={tabItems[0]?.key}
+            type="line"
+            className={styles.tabs}
+          >
+            {tabItems.map((tab) => (
+              <Tabs.TabPane tab={tab.label} key={tab.key}>
+                {tab.children}
+              </Tabs.TabPane>
             ))}
-          </ul>
+          </Tabs>
         </div>
       )}
     </Modal>
-  )
-}
+  );
+};

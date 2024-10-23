@@ -1,53 +1,53 @@
 .customCheckbox {
+  display: flex;
+  align-items: center;
+  color: #3498db;
+  text-align: center;
+  font-family: Gilroy;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  &:hover {
+    .ant-checkbox-inner {
+      background-color: transparent;
+      border-color: #3498db !important;
+    }
+  }
+  .ant-checkbox {
+    background: #fff;
+    width: 16px;
+    height: 16px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    color: var(--White, #FFF);
-    text-align: center;
-    font-family: Gilroy;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
+    .ant-checkbox-inner {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+    }
+    &.ant-checkbox-checked .ant-checkbox-inner {
+      background-color: #fff !important;
+      border-color: #3498db !important;
+    }
     &:hover {
-        .ant-checkbox-inner {
-            background-color: transparent;
-            border-color: transparent !important;
-        }
+      .ant-checkbox-inner {
+        border-color: #3498db !important;
+      }
     }
-    .ant-checkbox {
-        background: #FFF;
-        width: 16px;
-        height: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .ant-checkbox-inner {
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-        }
-        &.ant-checkbox-checked .ant-checkbox-inner {
-            background-color: #FFF !important;
-            border-color: transparent !important;
-        }
-        &:hover {
-            .ant-checkbox-inner {
-                border-color: transparent !important;
-            }
-        }
+  }
+  .ant-checkbox-checked {
+    .ant-checkbox-inner {
+      &::after {
+        border: 2px solid #3498db;
+        border-top: 0;
+        border-left: 0;
+      }
     }
-    .ant-checkbox-checked {
-        .ant-checkbox-inner {
-            &::after {
-                border: 2px solid #8E9DFD;
-                border-top: 0;
-                border-left: 0;
-            }
-        }
-    }
-    .checkboxLabel {
-        font-size: 18px;
-        color: #fff;
-        margin-left: 10px;
-    }
+  }
+  .checkboxLabel {
+    font-size: 18px;
+    color: #fff;
+    margin-left: 10px;
+  }
 }

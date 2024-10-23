@@ -1,20 +1,19 @@
 .container {
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f3f4f6;
-
   width: 100%;
 }
 
 .signupBox {
-  max-width: 600px; /* Уменьшена ширина формы */
+  max-width: 600px;
   width: 100%;
   background-color: #fff;
-  padding: 40px; /* Уменьшены отступы */
+  padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Уменьшена тень */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease-in-out;
 
@@ -24,8 +23,8 @@
 }
 
 .title {
-  margin-bottom: 20px; /* Уменьшен отступ для заголовка */
-  font-size: 28px; /* Уменьшен размер шрифта заголовка */
+  margin-bottom: 20px;
+  font-size: 28px;
   color: #4cadd5;
 }
 
@@ -36,13 +35,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Уменьшены отступы между элементами */
 }
 
 .submitButton {
   background-color: #4cadd5;
   border-color: #4cadd5;
-  height: 48px; /* Уменьшена высота кнопки */
+  height: 48px;
   font-weight: bold;
   border-radius: 8px;
   transition: background-color 0.3s ease;
@@ -54,7 +52,7 @@
 }
 
 .loginLink {
-  margin-top: 20px; /* Уменьшен отступ сверху */
+  margin-top: 20px;
   text-align: center;
   font-weight: bold;
 }

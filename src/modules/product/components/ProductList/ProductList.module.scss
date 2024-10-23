@@ -1,93 +1,80 @@
-.title {
-  margin-bottom: 64px;
-  color: var(--black, #343434);
+.sectionTitle {
+  font-size: 56px !important;
   text-align: center;
-  font-family: "Gilroy";
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.section {
+  padding: 40px;
+  padding-top: 0;
 }
 
 .product {
+  margin-bottom: 48px;
   display: flex;
-  justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
   &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
     width: calc(33.3333% - 10px);
-    padding: 32px;
-    border-radius: 16px;
-    background: #3498db;
+    padding: 24px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 13, 131, 0.18);
 
     &__content {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: center;
     }
+
     &__descr {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 24px;
     }
-    &__subtitleBlock {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+
     &__title {
-      color: var(--White, #fff);
-      font-family: Gilroy;
-      font-size: 24px;
-      font-weight: 700;
+      text-align: center;
+      color: #3498db;
+      font-size: 40px;
+      font-weight: 600;
     }
+
     &__subtitle {
-      color: var(--White, #fff);
-      font-family: Gilroy;
+      text-align: center;
+      color: #3498db;
       font-size: 20px;
-      font-weight: 700;
-    }
-    &__text {
-      color: var(--White, #fff);
-      font-family: Gilroy;
-      font-size: 16px;
       font-weight: 500;
+      line-height: normal;
     }
+
     &__button {
       margin-top: 30px;
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
       width: 100%;
-      padding: 20px 32px;
+      padding: 8px;
       border-radius: 12px;
-      border: 1px solid transparent;
+      border: 1px solid #3498db;
       background: #fff;
       color: #3498db;
       font-family: Gilroy;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       text-align: center;
       transition: 0.3s all;
-      &:hover {
-        border: 1px solid #fff;
-        background: transparent;
-        color: #fff !important;
-      }
-      &__disabled {
-        cursor: not-allowed;
-        background: var(--Line, rgba(0, 0, 0, 0.1)) !important;
-        color: var(--White, #fff);
-        &:hover {
-          border: 1px solid var(--Line, rgba(0, 0, 0, 0.1));
-        }
-      }
+
+      // svg {
+      //   width: 32px;
+      //   height: 32px;
+      // }
     }
   }
-}
-
-.divider {
-  height: 20px;
-  width: 1px;
-  opacity: 0.5;
-  background: var(--White, #fff);
 }
 
 .loadingContainer {

@@ -14,7 +14,11 @@ const Navbar = () => {
 
   return (
     <div className={styles.navbar}>
-      <Menu mode="horizontal" className={styles.menu}>
+      <Menu
+        mode="horizontal"
+        forceSubMenuRender={false}
+        className={styles.menu}
+      >
         {menuItems.map((item) => (
           <Menu.Item key={item.link} className={styles.menu__item}>
             <Link to={item.link}>{item.label}</Link>

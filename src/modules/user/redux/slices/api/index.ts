@@ -35,6 +35,18 @@ export type TUpdateBalanceResponse = {
   success: string
 }
 
+type TUpdateUser = {
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  region: string;
+  school: string;
+  referral_link?: string;
+  referral_bonus?: string
+}
+
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAuthUser: build.query<TUser, void>({
@@ -52,12 +64,22 @@ export const userApi = baseApi.injectEndpoints({
         }
       },
     }),
-    updateUserProfile: build.mutation({
-      query: (updatedData) => ({
+    updateUserProfile: build.mutation<TUpdateUser, TUpdateUser>({
+      query: ({ username, email, first_name, last_name, region, school, phone_number  }) => ({
         url: '/user/update/',
         method: 'PUT',
-        body: updatedData,
+        body: {
+          username,
+          email,
+          first_name,
+          last_name,
+          region,
+          school,
+          phone_number
+        }
       }),
+			transformResponse: (response: TUpdateUser) => response,
+      extraOptions: { showErrors: false }
     }),
     changePassword: build.mutation<TChangePasswordResponse, TChangePasswordRequest>({
       query: ({ current_password, new_password, new_password2 }) => ({

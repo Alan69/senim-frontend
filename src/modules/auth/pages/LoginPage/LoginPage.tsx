@@ -45,15 +45,19 @@ const LoginPage = () => {
           >
             <Form.Item
               name="username"
-              label="Логин / ИИН"
+              label="ИИН"
               rules={[
                 {
                   required: true,
-                  message: "Пожалуйста, введите логин / ИИН!",
+                  message: "Пожалуйста, введите ИИН!",
                 },
+                // {
+                //   pattern: /^\d{12}$/,
+                //   message: "ИИН должен состоять из 12 цифр!",
+                // },
               ]}
             >
-              <Input placeholder="Введите логин / ИИН" size="large" />
+              <Input placeholder="Введите ИИН" size="large" maxLength={12} />
             </Form.Item>
 
             <Form.Item

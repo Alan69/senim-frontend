@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useSignUpMutation } from "modules/auth/redux/api";
-import { Form, Input, Button, message, Typography } from "antd";
+import { Form, Input, Button, message, Typography, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { authActions } from "modules/auth/redux/slices/authSlice";
 import styles from "./SignUpPage.module.scss";
+import { useGetRegionListQuery } from "../../../../redux/api/regionsApi";
+import InputMask from "react-input-mask";
+
+const { Option } = Select;
 
 const { Title } = Typography;
 
@@ -11,14 +15,23 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const [signUp, { isLoading }] = useSignUpMutation();
 
+  const { data: regions, isLoading: isRegionsLoading } =
+    useGetRegionListQuery();
+
   const onFinish = async (values: any) => {
+    const phoneNumber = values.phone_number.replace(/\+|\s/g, "");
+
     if (values.password !== values.password2) {
       message.error("Пароли не совпадают!");
       return;
     }
 
     try {
-      const response = await signUp(values);
+      const response = await signUp({
+        ...values,
+        phone_number: phoneNumber,
+        region: values.region,
+      });
       // @ts-ignore
       const { access: token, refresh: refreshToken } = response.data;
 
@@ -46,15 +59,19 @@ const SignUpPage = () => {
           >
             <Form.Item
               name="username"
-              label="Логин / ИИН"
+              label="ИИН"
               rules={[
                 {
                   required: true,
-                  message: "Пожалуйста, введите логин / ИИН!",
+                  message: "Пожалуйста, введите ИИН!",
+                },
+                {
+                  pattern: /^\d{12}$/,
+                  message: "ИИН должен состоять из 12 цифр!",
                 },
               ]}
             >
-              <Input placeholder="Введите логин / ИИН" size="large" />
+              <Input placeholder="Введите ИИН" size="large" maxLength={12} />
             </Form.Item>
 
             <Form.Item
@@ -84,6 +101,54 @@ const SignUpPage = () => {
               ]}
             >
               <Input placeholder="Введите фамилию" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="region"
+              label="Регион"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, выберите регион!",
+                },
+              ]}
+            >
+              <Select placeholder="Выберите регион" loading={isRegionsLoading}>
+                {regions?.map((region) => (
+                  <Option key={region.id} value={region.id}>
+                    {region.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="school"
+              label="Школа"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, укажите школу!",
+                },
+              ]}
+            >
+              <Input placeholder="Введите школу" className="rounded-[10px]" />
+            </Form.Item>
+
+            <Form.Item
+              name="phone_number"
+              label="Номер телефона"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, введите номер телефона!",
+                },
+              ]}
+            >
+              <InputMask mask="+7 999 999 99 99" placeholder="+7 777 777 77 77">
+                {/* @ts-ignore */}
+                {(inputProps: any) => <Input {...inputProps} />}
+              </InputMask>
             </Form.Item>
 
             <Form.Item

@@ -2,10 +2,21 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 300px;
 }
 
 .menu {
   border: none;
   font-size: 16px;
   background: transparent;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+  &__item {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
 }

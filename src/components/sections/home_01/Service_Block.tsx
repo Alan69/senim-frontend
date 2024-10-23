@@ -1,30 +1,35 @@
-import { Link } from 'react-router-dom';
+import {
+  SmileOutlined,
+  BookOutlined,
+  TeamOutlined,
+  LaptopOutlined,
+} from "@ant-design/icons";
+import { Tooltip } from "antd";
 
-// eslint-disable-next-line react/prop-types
 // @ts-ignore
-const Service_Block = ({ icon_black, icon_orange, title, text }) => {
+const Service_Block = ({ title, text, iconType }) => {
+  // Массив иконок для подмены в зависимости от типа услуги
+  const icons = {
+    smile: <SmileOutlined style={{ fontSize: "70px", color: "#ffa500" }} />,
+    book: <BookOutlined style={{ fontSize: "70px", color: "#ffa500" }} />,
+    team: <TeamOutlined style={{ fontSize: "70px", color: "#ffa500" }} />,
+    laptop: <LaptopOutlined style={{ fontSize: "70px", color: "#ffa500" }} />,
+  };
+
   return (
-    <li className='group bg-white p-[30px] transition-all duration-300 ease-in-out hover:bg-black'>
-      <div className='relative mb-9 h-[70px] w-[70px]'>
-        <img
-          src={icon_black}
-          alt='service-icon-black-1'
-          width={70}
-          height={70}
-        />
-        <img
-          src={icon_orange}
-          alt='service-icon-orange-1'
-          width={70}
-          height={70}
-          className='absolute left-0 top-0 h-full w-full opacity-0 transition-all duration-300 ease-linear group-hover:opacity-100'
-        />
+    <li className="group bg-white p-8 transition-all duration-300 ease-in-out hover:bg-black">
+      <div className="relative mb-9 h-[70px] w-[70px] flex items-center justify-center">
+        {/* Используем иконки Ant Design */}
+        <Tooltip title={title}>
+          {/* @ts-ignore */}
+          {icons[iconType] || icons.smile}{" "}
+          {/* Подставляем иконку на основе iconType */}
+        </Tooltip>
       </div>
-      <h3 className='mb-4 block text-xl leading-tight -tracking-[0.5px] group-hover:text-white xl:text-2xl xxl:text-[28px]'>
-
+      <h3 className="mb-4 text-xl font-semibold leading-tight text-gray-900 group-hover:text-white xl:text-2xl">
+        {title}
       </h3>
-      <p className='mb-12 duration-300 group-hover:text-white'>{text}</p>
-
+      <p className="text-gray-600 group-hover:text-white">{text}</p>
     </li>
   );
 };

@@ -27,8 +27,17 @@ export const CompletedTestListPage = () => {
       title: "Название теста",
       dataIndex: ["product", "title"],
       key: "title",
+      sortDirections: ["ascend", "descend"],
       sorter: (a: any, b: any) =>
         a.product.title.localeCompare(b.product.title),
+    },
+    {
+      title: "Набранные баллы",
+      dataIndex: "correct_answers_count",
+      key: "correct_answers_count",
+      sortDirections: ["ascend", "descend"],
+      sorter: (a: any, b: any) =>
+        a.correct_answers_count - b.correct_answers_count,
     },
     {
       title: "Дата начала",
@@ -36,6 +45,7 @@ export const CompletedTestListPage = () => {
       key: "start_test_time",
       render: (start_test_time: string) =>
         formatCompletionDate(start_test_time),
+      sortDirections: ["ascend", "descend"],
       sorter: (a: any, b: any) =>
         new Date(a.start_test_time).getTime() -
         new Date(b.start_test_time).getTime(),
@@ -45,6 +55,7 @@ export const CompletedTestListPage = () => {
       dataIndex: "completed_date",
       key: "completed_date",
       render: (completed_date: string) => formatCompletionDate(completed_date),
+      sortDirections: ["ascend", "descend"],
       sorter: (a: any, b: any) =>
         new Date(a.completed_date).getTime() -
         new Date(b.completed_date).getTime(),
@@ -70,6 +81,7 @@ export const CompletedTestListPage = () => {
           ) : (
             <Table
               dataSource={testList}
+              // @ts-ignore
               columns={columns}
               rowKey="id"
               pagination={{ pageSize: 10, position: ["bottomCenter"] }} // Центрируем пагинацию
