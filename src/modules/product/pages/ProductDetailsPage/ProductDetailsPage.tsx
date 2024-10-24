@@ -62,8 +62,6 @@ const ProductDetailsPage = () => {
 
   const selectedCount = Object.values(selectedSubjects).filter(Boolean).length;
 
-  console.log("selectedSubjects", selectedSubjects);
-
   const MAX_SELECTION = product?.subject_limit;
 
   const handleStart = async () => {
@@ -72,10 +70,10 @@ const ProductDetailsPage = () => {
       return;
     }
 
-    if (parseFloat(user.balance) < product.sum) {
-      setIsNotEnoughBalanceModalOpen(true);
-      return;
-    }
+    // if (parseFloat(user.balance) < product.sum) {
+    //   setIsNotEnoughBalanceModalOpen(true);
+    //   return;
+    // }
 
     const requiredTestIds = Object.keys(selectedRequiredSubjects).filter(
       (key) => selectedRequiredSubjects[key]
