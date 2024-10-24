@@ -423,40 +423,41 @@ const StartedTestForm = ({
         <div className={styles.footer}>
           <div className={styles.topRightButtons}>
             <Button
-              onClick={handlePreviousQuestion}
-              disabled={currentTestIndex === 0 && currentQuestionIndex === 0}
+              onClick={() => handleTestSelect(currentTestIndex - 1)}
+              disabled={currentTestIndex === 0}
               className={cn(
                 styles.testForm__button,
-                styles.testForm__button__back
+                styles.testForm__button__back,
+                styles.testForm__button__top
               )}
             >
-              Предыдущий вопрос
+              Предыдущий предмет
             </Button>
 
             <Button
-              onClick={handleNextQuestion}
-              disabled={
-                currentTestIndex === parsedData.length - 1 &&
-                currentQuestionIndex === currentTest.questions.length - 1
-              }
-              className={cn(styles.testForm__button, styles.testForm__button)}
+              onClick={() => handleTestSelect(currentTestIndex + 1)}
+              disabled={currentTestIndex === parsedData.length - 1}
+              className={cn(
+                styles.testForm__button,
+                styles.testForm__button,
+                styles.testForm__button__top
+              )}
             >
-              Следующий вопрос
+              Следующий предмет
             </Button>
           </div>
         </div>
 
         <div className={styles.navigationButtons}>
           <Button
-            onClick={() => handleTestSelect(currentTestIndex - 1)}
-            disabled={currentTestIndex === 0}
+            onClick={handlePreviousQuestion}
+            disabled={currentTestIndex === 0 && currentQuestionIndex === 0}
             className={cn(
               styles.testForm__button,
-              styles.testForm__button__back,
-              styles.testForm__button__top
+              styles.testForm__button__back
             )}
           >
-            Предыдущий предмет
+            Предыдущий вопрос
           </Button>
 
           {isLastQuestionOfLastTest ? (
@@ -475,15 +476,14 @@ const StartedTestForm = ({
             </Button>
           ) : (
             <Button
-              onClick={() => handleTestSelect(currentTestIndex + 1)}
-              disabled={currentTestIndex === parsedData.length - 1}
-              className={cn(
-                styles.testForm__button,
-                styles.testForm__button,
-                styles.testForm__button__top
-              )}
+              onClick={handleNextQuestion}
+              disabled={
+                currentTestIndex === parsedData.length - 1 &&
+                currentQuestionIndex === currentTest.questions.length - 1
+              }
+              className={cn(styles.testForm__button, styles.testForm__button)}
             >
-              Следующий предмет
+              Следующий вопрос
             </Button>
           )}
         </div>
