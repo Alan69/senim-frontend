@@ -60,7 +60,7 @@ const Footer = () => {
           </Link>
           <br />
           <Link
-            to="/contact"
+            to="/completed-test/list"
             style={{
               color: "#ffffff",
               backgroundColor: "#000000",
@@ -70,7 +70,21 @@ const Footer = () => {
               marginBottom: "8px",
             }}
           >
-            Контакты
+            Результаты тестов
+          </Link>
+          <br />
+          <Link
+            to="/product/list"
+            style={{
+              color: "#ffffff",
+              backgroundColor: "#000000",
+              padding: "10px 20px",
+              borderRadius: "5px",
+              display: "inline-block",
+              marginBottom: "8px",
+            }}
+          >
+            Тесты
           </Link>
         </Col>
 
