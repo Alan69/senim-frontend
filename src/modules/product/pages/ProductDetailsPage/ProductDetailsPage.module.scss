@@ -4,6 +4,10 @@
   display: flex;
   justify-content: center;
   padding: 40px;
+
+  &__full {
+    height: 100%;
+  }
 }
 
 .container {
@@ -12,6 +16,11 @@
   background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  height: 100%;
+
+  > div {
+    height: 100%;
+  }
 }
 
 .actions {

@@ -266,24 +266,25 @@
   text-align: center;
   position: relative;
   min-height: 600px;
+  // height: 92%;
   width: 100%;
   padding: 40px;
   padding-top: 64px;
   border-radius: 16px;
-  background: #e6f7ff; // Светло-голубой фон
+  background: #e6f7ff;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Лёгкая тень
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &__button {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    border-radius: 12px; // Более округлые углы
-    background: #ffffff; // Белый фон кнопок
-    color: #1890ff; // Яркий синий текст
-    border: 1px solid #d9d9d9; // Легкая рамка
+    border-radius: 12px;
+    background: #ffffff;
+    color: #1890ff;
+    border: 1px solid #d9d9d9;
     transition: all 0.3s ease;
     font-family: Gilroy;
     font-size: 16px;
@@ -326,13 +327,13 @@
 .tab {
   padding: 6px 24px;
   border-radius: 8px;
-  background: #1890ff; // Синий фон активных табов
+  background: #1890ff;
   color: #ffffff;
   font-family: Gilroy;
   font-size: 18px;
   transition: all 0.3s;
   &__isActive {
-    background: #40a9ff; // Более яркий оттенок синего для активного таба
+    background: #40a9ff;
   }
 }
 
@@ -415,19 +416,20 @@
 
 .timer,
 .currentQuestionNumber {
-  background-color: rgba(24, 144, 255, 0.1); /* Полупрозрачный фон */
-  border: 1px solid #1890ff; /* Мягкая синяя рамка */
+  background-color: rgba(24, 144, 255, 0.1);
+  border: 1px solid #1890ff;
   padding: 8px 16px;
-  border-radius: 10px; /* Округлые углы */
-  font-size: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
   color: #1890ff;
   display: inline-block;
-  margin-right: 10px; /* Расстояние между таймером и вопросом */
+  margin-right: 10px;
 }
 
 .header {
   display: flex;
-  justify-content: flex-end; /* Разместить элементы справа */
+  justify-content: flex-end;
   align-items: center;
-  margin-bottom: 20px; /* Отступ снизу */
+  margin-bottom: 20px;
 }

@@ -1,5 +1,10 @@
 .mainLayout {
-    padding-top: 64px;
-    // height: calc(100vh);
-    background: var(--Shade-light-background, #F9F9FF);
+  padding-top: 64px;
+  // height: calc(100vh);
+  background: var(--Shade-light-background, #f9f9ff);
+
+  &__full {
+    padding-top: 0;
+    height: 100vh;
+  }
 }

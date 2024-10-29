@@ -182,7 +182,7 @@ const ProductDetailsPage = () => {
 
   return (
     <div
-      className={cn(testIsStarted ? "" : styles.body)}
+      className={cn(testIsStarted ? styles.body__full : styles.body)}
       style={{ padding: testIsStarted ? 20 : 40 }}
     >
       <Card className={styles.container}>
@@ -220,17 +220,19 @@ const ProductDetailsPage = () => {
               </Descriptions.Item>
             </Descriptions>
 
-            <Alert
-              message={`Выберите ${MAX_SELECTION} дополнительных предметов.`}
-              type="warning"
-              showIcon
-              icon={<ExclamationCircleOutlined />}
-              className={styles.selectionInfo}
-            />
+            {selectedCount !== MAX_SELECTION && (
+              <Alert
+                message={`Выберите ${MAX_SELECTION} дополнительных предметов.`}
+                type="warning"
+                showIcon
+                icon={<ExclamationCircleOutlined />}
+                className={styles.selectionInfo}
+              />
+            )}
           </>
         )}
 
-        <div>
+        <>
           {testIsStarted ? (
             <StartedTestForm
               productTitle={product?.title}
@@ -314,7 +316,7 @@ const ProductDetailsPage = () => {
               </Button>
             </div>
           )}
-        </div>
+        </>
       </Card>
       <ModalNotEnoughBalance
         isOpen={isNotEnoughBalanceModalOpen}
