@@ -15,7 +15,7 @@ const Footer = () => {
       style={{
         padding: "60px 40px",
         color: "#ffffff",
-        backgroundColor: "#2b3a42", // Добавлен цвет фона для контраста
+        backgroundColor: "#2b3a42",
       }}
     >
       <Row gutter={[32, 32]}>
@@ -27,17 +27,17 @@ const Footer = () => {
             <EnvironmentOutlined
               style={{ color: "#4cadd5", marginRight: "8px" }}
             />
-            ул. Тест, 123, Тараз
+            г. Шымкент, Абайский район, мкр Самал-3, зд. 22А
           </Text>
           <br />
           <Text style={{ color: "#ffffff" }}>
             <PhoneOutlined style={{ color: "#4cadd5", marginRight: "8px" }} />
-            +7 777 777 7777
+            +7 701 012 44 09
           </Text>
           <br />
           <Text style={{ color: "#ffffff" }}>
             <MailOutlined style={{ color: "#4cadd5", marginRight: "8px" }} />
-            info@senimtest.ru
+            sapatestinfo@gmail.com
           </Text>
         </Col>
 
