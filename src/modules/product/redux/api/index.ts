@@ -15,10 +15,15 @@ type TProductResponse = {
   product_type: ProductType
 }
 
-type TSubjectResponse = {
+type TSubject = {
   id: string;
   title: string;
   is_required: boolean;
+}
+
+type TSubjectResponse = {
+  grade: string;
+  tests: TSubject[];
 }
 
 export type TTest = {

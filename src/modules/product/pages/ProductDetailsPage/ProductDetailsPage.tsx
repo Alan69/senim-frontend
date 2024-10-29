@@ -52,6 +52,7 @@ const ProductDetailsPage = () => {
   const [selectedSubjects, setSelectedSubjects] = useState<{
     [key: string]: boolean;
   }>({});
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null); // Для отслеживания выбранной группы grade
   const [testIsStarted, setTestIsStarted] = useState<boolean>(false);
   const [unansweredQuestions, setUnansweredQuestions] = useState<
     { testTitle: string; questionNumber: number; questionId: string }[]
@@ -136,7 +137,7 @@ const ProductDetailsPage = () => {
   };
 
   const handleCheckboxChange =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (id: string, grade: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       if (
         selectedCount >= (MAX_SELECTION ? MAX_SELECTION : 1) &&
         !selectedSubjects[id]
@@ -145,6 +146,22 @@ const ProductDetailsPage = () => {
           `Вы не можете выбрать более ${MAX_SELECTION} дополнительных предметов.`
         );
       } else {
+        if (e.target.checked) {
+          if (!selectedGroup) {
+            setSelectedGroup(grade);
+          } else if (selectedGroup !== grade) {
+            message.warning(
+              "Вы можете выбрать предметы только из одной группы."
+            );
+            return;
+          }
+        } else if (
+          Object.keys(selectedSubjects).filter((key) => selectedSubjects[key])
+            .length === 1
+        ) {
+          setSelectedGroup(null);
+        }
+
         setSelectedSubjects({
           ...selectedSubjects,
           [id]: e.target.checked,
@@ -154,12 +171,14 @@ const ProductDetailsPage = () => {
 
   useEffect(() => {
     if (subjectList) {
-      const requiredSubjects = subjectList
-        .filter((subject) => subject.is_required)
-        .reduce((acc, subject) => {
-          acc[subject.id] = true;
-          return acc;
-        }, {} as { [key: string]: boolean });
+      const requiredSubjects = subjectList.reduce((acc, group) => {
+        group.tests.forEach((subject) => {
+          if (subject.is_required) {
+            acc[subject.id] = true;
+          }
+        });
+        return acc;
+      }, {} as { [key: string]: boolean });
 
       setSelectedRequiredSubjects(requiredSubjects);
     }
@@ -253,20 +272,34 @@ const ProductDetailsPage = () => {
                 }
                 key="1"
               >
-                <Row gutter={[16, 16]}>
-                  {subjectList
-                    ?.filter((subject) => subject.is_required)
-                    .map((subject) => (
-                      <Col span={24} key={subject.id}>
-                        <CustomCheckbox
-                          checked={subject.is_required}
-                          title={subject.title}
-                          onChange={handleCheckboxChange(subject.id)}
-                          disabled
-                        />
-                      </Col>
-                    ))}
-                </Row>
+                {subjectList
+                  ?.slice()
+                  .sort((a, b) => Number(a.grade) - Number(b.grade))
+                  .map((group) => {
+                    const requiredSubjects = group.tests.filter(
+                      (subject) => subject.is_required
+                    );
+
+                    return requiredSubjects.length > 0 ? (
+                      <div key={group.grade}>
+                        <Row gutter={[16, 16]}>
+                          {requiredSubjects.map((subject) => (
+                            <Col span={24} key={subject.id}>
+                              <CustomCheckbox
+                                checked={subject.is_required}
+                                title={subject.title}
+                                onChange={handleCheckboxChange(
+                                  subject.id,
+                                  group.grade
+                                )}
+                                disabled
+                              />
+                            </Col>
+                          ))}
+                        </Row>
+                      </div>
+                    ) : null;
+                  })}
               </Tabs.TabPane>
 
               <Tabs.TabPane
@@ -278,19 +311,42 @@ const ProductDetailsPage = () => {
                 }
                 key="2"
               >
-                <Row gutter={[16, 16]}>
-                  {subjectList
-                    ?.filter((subject) => !subject.is_required)
-                    .map((subject) => (
-                      <Col span={24} key={subject.id}>
-                        <CustomCheckbox
-                          checked={selectedSubjects[subject.id]}
-                          title={subject.title}
-                          onChange={handleCheckboxChange(subject.id)}
-                        />
-                      </Col>
-                    ))}
-                </Row>
+                {subjectList
+                  ?.slice()
+                  .sort((a, b) => Number(a.grade) - Number(b.grade))
+                  .map((group) => {
+                    const optionalSubjects = group.tests.filter(
+                      (subject) => !subject.is_required
+                    );
+
+                    return optionalSubjects.length > 0 ? (
+                      <div className={styles.classTitle} key={group.grade}>
+                        {group.grade !== "0" && (
+                          <h4
+                            className={styles.gradeTitle}
+                          >{`Класс: ${group.grade}`}</h4>
+                        )}
+                        <Row gutter={[16, 16]}>
+                          {optionalSubjects.map((subject) => (
+                            <Col span={24} key={subject.id}>
+                              <CustomCheckbox
+                                checked={selectedSubjects[subject.id]}
+                                title={subject.title}
+                                onChange={handleCheckboxChange(
+                                  subject.id,
+                                  group.grade
+                                )}
+                                // @ts-ignore
+                                disabled={
+                                  selectedGroup && selectedGroup !== group.grade
+                                }
+                              />
+                            </Col>
+                          ))}
+                        </Row>
+                      </div>
+                    ) : null;
+                  })}
               </Tabs.TabPane>
             </Tabs>
           )}
