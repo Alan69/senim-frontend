@@ -21,7 +21,7 @@ const Footer = () => {
       <Row gutter={[32, 32]}>
         <Col xs={24} md={8}>
           <Title level={4} style={{ color: "#4cadd5" }}>
-            Senim Test
+            Sapa Test
           </Title>
           <Text style={{ color: "#ffffff" }}>
             <EnvironmentOutlined
@@ -138,7 +138,7 @@ const Footer = () => {
       <Row style={{ marginTop: "40px", textAlign: "center" }}>
         <Col span={24}>
           <Text style={{ color: "#888" }}>
-            © {new Date().getFullYear()} Senim Test. Все права защищены.
+            © {new Date().getFullYear()} Sapa Test. Все права защищены.
           </Text>
         </Col>
       </Row>
