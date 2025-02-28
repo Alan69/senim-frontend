@@ -27,12 +27,12 @@ const Footer = () => {
             <EnvironmentOutlined
               style={{ color: "#4cadd5", marginRight: "8px" }}
             />
-            г. Шымкент, Абайский район, мкр Самал-3, зд. 22А
+            Шымкент қаласы, Нұрсат молтек ауданы
           </Text>
           <br />
           <Text style={{ color: "#ffffff" }}>
             <PhoneOutlined style={{ color: "#4cadd5", marginRight: "8px" }} />
-            +7 701 012 44 09
+            +7 (771) 541-43-25
           </Text>
           <br />
           <Text style={{ color: "#ffffff" }}>
