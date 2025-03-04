@@ -36,11 +36,13 @@ export type TQuestion = {
   id: string
   text: string
   options: TOption[]
+  img: string
 }
 
 export type TOption = {
   id: string
   text: string
+  img: string
 }
 
 export type TStartTestRequest = {

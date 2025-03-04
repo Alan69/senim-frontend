@@ -402,18 +402,30 @@ const StartedTestForm = ({
           </div>
 
           <div className={styles.questionText}>{currentQuestion?.text}</div>
+          {currentQuestion?.img && (
+            <div className={styles.questionImage}>
+              <img src={currentQuestion.img} alt="Question" />
+            </div>
+          )}
 
           <div className={styles.options}>
             <Radio.Group value={selectedOption} onChange={handleOptionChange}>
               <Space direction="vertical">
                 {currentQuestion?.options?.map((option: any) => (
-                  <Radio
-                    key={option.id}
-                    value={option.id}
-                    className={styles.option}
+                  <div className={styles.option}>
+                    <Radio
+                      key={option.id}
+                      value={option.id}
+                      className={styles.option}
                   >
-                    {option.text}
-                  </Radio>
+                      {option.text}
+                    </Radio>
+                    {option.img && (
+                      <div className={styles.optionImage}>
+                        <img src={option.img} alt="Option" />
+                      </div>
+                    )}
+                  </div>
                 ))}
               </Space>
             </Radio.Group>
