@@ -19,8 +19,6 @@ const SignUpPage = () => {
     useGetRegionListQuery();
 
   const onFinish = async (values: any) => {
-    const phoneNumber = values.phone_number.replace(/\+|\s/g, "");
-
     if (values.password !== values.password2) {
       message.error("Пароли не совпадают!");
       return;
@@ -29,7 +27,6 @@ const SignUpPage = () => {
     try {
       const response = await signUp({
         ...values,
-        phone_number: phoneNumber,
         region: values.region,
       });
       // @ts-ignore
@@ -72,17 +69,6 @@ const SignUpPage = () => {
               ]}
             >
               <Input placeholder="Введите ИИН" size="large" maxLength={12} />
-            </Form.Item>
-
-            <Form.Item
-              name="email"
-              label="Почта"
-              rules={[
-                { required: true, message: "Пожалуйста, введите почту!" },
-                { type: "email", message: "Введите корректный email!" },
-              ]}
-            >
-              <Input placeholder="example@gmail.com" size="large" />
             </Form.Item>
 
             <Form.Item
@@ -133,22 +119,6 @@ const SignUpPage = () => {
               ]}
             >
               <Input placeholder="Введите школу" className="rounded-[10px]" />
-            </Form.Item>
-
-            <Form.Item
-              name="phone_number"
-              label="Номер телефона"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, введите номер телефона!",
-                },
-              ]}
-            >
-              <InputMask mask="+7 999 999 99 99" placeholder="+7 777 777 77 77">
-                {/* @ts-ignore */}
-                {(inputProps: any) => <Input {...inputProps} />}
-              </InputMask>
             </Form.Item>
 
             <Form.Item

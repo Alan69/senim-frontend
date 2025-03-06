@@ -3,12 +3,10 @@ import { authActions } from '../../../../auth/redux/slices/authSlice';
 
 export type TUser = {
   username: string
-  email: string
   first_name: string
   last_name: string
   region: string
   school: string
-  phone_number: string
   balance: string
   referral_link: any
   referral_bonus: string
@@ -39,8 +37,6 @@ type TUpdateUser = {
   username: string;
   first_name: string;
   last_name: string;
-  email: string;
-  phone_number: string;
   region: string;
   school: string;
   referral_link?: string;
@@ -65,17 +61,15 @@ export const userApi = baseApi.injectEndpoints({
       },
     }),
     updateUserProfile: build.mutation<TUpdateUser, TUpdateUser>({
-      query: ({ username, email, first_name, last_name, region, school, phone_number  }) => ({
+      query: ({ username, first_name, last_name, region, school  }) => ({
         url: '/user/update/',
         method: 'PUT',
         body: {
           username,
-          email,
           first_name,
           last_name,
           region,
           school,
-          phone_number
         }
       }),
 			transformResponse: (response: TUpdateUser) => response,

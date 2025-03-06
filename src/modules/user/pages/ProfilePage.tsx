@@ -29,12 +29,11 @@ const ProfilePage = () => {
     useChangePasswordMutation();
 
   const handleProfileUpdate = async (values: TUser) => {
-    const phoneNumber = values.phone_number.replace(/\D/g, "");
+    // const phoneNumber = values.phone_number.replace(/\D/g, "");
 
     try {
       await updateUserProfile({
         ...values,
-        phone_number: phoneNumber,
         // @ts-ignore
         region: values.region.id,
       }).unwrap();
@@ -98,8 +97,6 @@ const ProfilePage = () => {
               username: user.username,
               first_name: user.first_name,
               last_name: user.last_name,
-              phone_number: user.phone_number,
-              email: user.email,
               region: user.region,
               school: user.school,
             }}
@@ -143,39 +140,6 @@ const ProfilePage = () => {
               ]}
             >
               <Input disabled={isUserLoading} />
-            </Form.Item>
-            <Form.Item
-              label="Почта"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  type: "email",
-                  message: "Пожалуйста, введите корректный email!",
-                },
-              ]}
-            >
-              <Input disabled={isUserLoading} />
-            </Form.Item>
-
-            <Form.Item
-              label="Телефон"
-              name="phone_number"
-              rules={[
-                {
-                  required: true,
-                  message: "Пожалуйста, введите номер телефона!",
-                },
-              ]}
-            >
-              <InputMask
-                mask="+7 999 999 99 99"
-                placeholder="+7 777 777 77 77"
-                disabled={isUserLoading}
-              >
-                {/* @ts-ignore */}
-                {(inputProps) => <Input {...inputProps} />}
-              </InputMask>
             </Form.Item>
 
             <Form.Item
