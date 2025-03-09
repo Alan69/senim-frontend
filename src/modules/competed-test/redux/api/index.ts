@@ -15,7 +15,7 @@ export type TSelectedOption = {
 export type TCompletedQuestion = {
   id: string;
   question_text: string;
-  selected_option: TSelectedOption | null;
+  selected_option: TSelectedOption[] | null;
   all_options: TAllOptions[]
 }
 

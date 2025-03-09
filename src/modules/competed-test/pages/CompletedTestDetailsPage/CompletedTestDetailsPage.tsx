@@ -15,6 +15,21 @@ import TabPane from "antd/es/tabs/TabPane";
 
 const { Title, Text } = Typography;
 
+interface TOption {
+  id: string;
+  text: string;
+  is_correct: boolean;
+}
+
+interface TSelectedOption extends TOption {}
+
+interface TQuestion {
+  id: string;
+  question_text: string;
+  selected_option: TSelectedOption[];
+  all_options: TOption[];
+}
+
 export const CompletedTestDetailsPage = () => {
   const { id } = useParams();
   const [getAuthUser] = useLazyGetAuthUserQuery();
@@ -360,8 +375,8 @@ export const CompletedTestDetailsPage = () => {
                         tab={
                           <span>
                             Вопрос {idx + 1}
-                            {question.selected_option ? (
-                              question.selected_option.is_correct ? (
+                            {question.selected_option && question.selected_option.length > 0 ? (
+                              question.selected_option.some(option => option.is_correct) ? (
                                 <CheckCircleOutlined
                                   style={{ color: "#52c41a", marginLeft: 8 }}
                                 />
@@ -394,7 +409,7 @@ export const CompletedTestDetailsPage = () => {
                             {question.question_text}
                           </Title>
 
-                          {question.selected_option === null && (
+                          {(question.selected_option === null || question.selected_option.length === 0) && (
                             <Title level={5} type="warning">
                               Вы не выбрали вариант ответа!
                             </Title>
@@ -403,8 +418,9 @@ export const CompletedTestDetailsPage = () => {
                           <Row gutter={[16, 16]}>
                             {question?.all_options?.length > 0 ? (
                               question.all_options.map((option) => {
-                                const isSelected =
-                                  question.selected_option?.id === option.id;
+                                const isSelected = question.selected_option?.some(
+                                  (selected) => selected.id === option.id
+                                );
                                 const isCorrect = option.is_correct;
 
                                 return (

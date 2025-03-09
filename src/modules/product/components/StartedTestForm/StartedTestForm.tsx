@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./StartedTestForm.module.scss";
-import { Button, Radio, Space } from "antd";
+import { Button, Radio, Space, Checkbox } from "antd";
 import { TimerContext } from "App";
 import cn from "classnames";
 import { ReactComponent as IconArrow } from "assets/icons/arrow-left.svg";
 import { ModalFinishTest } from "../ModalFinishTest/ModalFinishTest";
+
+// Define Option interface
+interface Option {
+  id: string;
+  text: string;
+  img?: string;
+}
 
 type TProps = {
   productTitle: string | undefined;
@@ -56,7 +63,7 @@ const StartedTestForm = ({
 
   const [currentTestIndex, setCurrentTestIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{
-    [key: string]: string;
+    [key: string]: string | string[];
   }>({});
   const [questionIndices, setQuestionIndices] = useState<{
     [key: number]: number;
@@ -79,11 +86,17 @@ const StartedTestForm = ({
   useEffect(() => {
     const savedIndex = questionIndices[currentTestIndex] || 0;
     setCurrentQuestionIndex(savedIndex);
-    setSelectedOption(
-      selectedAnswers[
-        parsedData[currentTestIndex]?.questions[savedIndex]?.id
-      ] || null
-    );
+    
+    const currentAnswer = selectedAnswers[
+      parsedData[currentTestIndex]?.questions[savedIndex]?.id
+    ];
+    
+    // Only set selectedOption if the answer is a string (not an array)
+    if (typeof currentAnswer === 'string' || currentAnswer === null) {
+      setSelectedOption(currentAnswer);
+    } else {
+      setSelectedOption(null);
+    }
   }, [currentTestIndex, parsedData, questionIndices, selectedAnswers]);
 
   const handleTestSelect = (index: number) => {
@@ -200,6 +213,20 @@ const StartedTestForm = ({
     });
   };
 
+  const handleMultiOptionChange = (checkedValues: string[]) => {
+    const currentQuestionId =
+      parsedData[currentTestIndex].questions[currentQuestionIndex].id;
+
+    // Remove the 2-option limit for task_type 8
+    const updatedAnswers = {
+      ...selectedAnswers,
+      [currentQuestionId]: checkedValues,
+    };
+
+    setSelectedAnswers(updatedAnswers);
+    localStorage.setItem("selectedAnswers", JSON.stringify(updatedAnswers));
+  };
+
   const findUnansweredQuestions = () => {
     // @ts-ignore
     const unanswered = [];
@@ -244,116 +271,6 @@ const StartedTestForm = ({
   const totalQuestions = currentTest.questions.length;
 
   return (
-    // <>
-    //   {timerInitialized && testIsStarted && timeLeft > 0 && (
-    //     <h2 className={styles.title}>
-    //       {productTitle}
-    //     </h2>
-    //   )}
-
-    //   <div className={styles.testForm}>
-    //     {timerInitialized && testIsStarted && timeLeft > 0 && (
-    //       <div
-    //         className={cn(styles.timer)}
-    //       >
-    //         Осталось: {formatTime(timeLeft)}
-    //       </div>
-    //     )}
-    //     {/* {timerInitialized && testIsStarted && timeLeft > 0 && (
-    //       <h2 className={styles.title}>
-    //         {productTitle}
-    //       </h2>
-    //     )} */}
-
-    //     <Button
-    //       onClick={() => {
-    //         handleOpenFinistTestModal()
-    //         findUnansweredQuestions()
-    //       }}
-    //       className={cn(styles.testForm__button, styles.testForm__button__prenatallyFinish)}
-    //     >
-    //       Пренудительно завершить тест
-    //     </Button>
-
-    //     <div className={styles.tabs}>
-    //       {parsedData.map((test: any, index: number) => (
-    //         <button
-    //           key={test.title}
-    //           className={`${styles.tab} ${index === currentTestIndex ? styles.tab__isActive : ''}`}
-    //           onClick={() => handleTestSelect(index)}
-    //         >
-    //           {test.title}
-    //         </button>
-    //       ))}
-    //     </div>
-
-    //     <div className={styles.questionTabs}>
-    //       {currentTest.questions.map((question: any, index: number) => (
-    //         <button
-    //           key={index}
-    //           className={cn(styles.questionTab, {
-    //             [styles.unanswered]: isQuestionUnanswered(question.id),
-    //             [styles.questionTab__isActive]: index === currentQuestionIndex,
-    //           })}
-    //           onClick={() => handleQuestionSelect(index)}
-    //         >
-    //           {index + 1}
-    //         </button>
-    //       ))}
-    //     </div>
-
-    //     <div className={styles.questionText}>{currentQuestion.text}</div>
-
-    //     <div className={styles.options}>
-    //       <Radio.Group value={selectedOption} onChange={handleOptionChange}>
-    //         <Space direction="vertical">
-    //           {currentQuestion.options.map((option: any) => (
-    //             <Radio key={option.id} value={option.id} className={styles.option}>
-    //               {option.text}
-    //             </Radio>
-    //           ))}
-    //         </Space>
-    //       </Radio.Group>
-    //     </div>
-
-    //     <div className={styles.navigationButtons}>
-    //       <Button
-    //         onClick={handlePreviousQuestion}
-    //         disabled={currentTestIndex === 0 && currentQuestionIndex === 0}
-    //         className={cn(styles.testForm__button, styles.testForm__button__back)}
-    //       >
-    //         <IconArrow /> Предыдущий вопрос
-    //       </Button>
-    //       {isLastQuestionOfLastTest ? (
-    //         <Button
-    //           onClick={() => {
-    //             handleOpenFinistTestModal()
-    //             findUnansweredQuestions()
-    //           }}
-    //           className={cn(styles.testForm__button, styles.testForm__button__finish)}
-    //         >
-    //           Завершить тест
-    //         </Button>
-    //       ) : (
-    //         <Button
-    //           onClick={handleNextQuestion}
-    //           disabled={currentTestIndex === parsedData.length - 1 && currentQuestionIndex === currentTest.questions.length - 1}
-    //           className={cn(styles.testForm__button, styles.testForm__button)}
-    //         >
-    //           Следующий вопрос <IconArrow />
-    //         </Button>
-    //       )}
-    //     </div>
-    //   </div>
-    //   <ModalFinishTest
-    //     isOpen={isFinishTestModalOpen}
-    //     setOpen={setIsFinishTestModalOpen}
-    //     unansweredQuestions={unansweredQuestions}
-    //     handleCompleteTest={handleCompleteTest}
-    //     isCompleting={isCompleting}
-    //   />
-    // </>
-
     <>
       <div className={styles.testForm}>
         <div className={cn(styles.header, styles.topLeftButtons)}>
@@ -401,34 +318,143 @@ const StartedTestForm = ({
             ))}
           </div>
 
-          <div className={styles.questionText}>{currentQuestion?.text}</div>
-          {currentQuestion?.img && (
-            <div className={styles.questionImage}>
-              <img src={currentQuestion.img} alt="Question" />
-            </div>
-          )}
+          <div className={styles.questionContainer}>
+            {currentQuestion?.task_type === 10 &&(
+              <div className={styles.sourceText}>
+                <h4>Источник:</h4>
+                <p>{currentQuestion?.source_text}</p>
+              </div>
+            )}
+            <div className={styles.questionText}>{currentQuestion?.text}</div>
+            {currentQuestion?.img && (
+              <div className={styles.imageContainer}>
+                <img src={currentQuestion.img} alt="Question" />
+              </div>
+            )}
+            
+            {currentQuestion?.task_type === 8 ? (
+              <div className={styles.matchingContainer}>
+                <div className={styles.matchingTable}>
+                  <div className={styles.matchingRow}>
+                    <div className={styles.matchingCell}>A)</div>
+                    <div className={styles.matchingCell}>{currentQuestion?.text2 || "Loading..."}</div>
+                    <div className={styles.matchingCell}>
+                      <select 
+                        className={styles.matchingSelect}
+                        value={
+                          Array.isArray(selectedAnswers[currentQuestion?.id])
+                            ? (selectedAnswers[currentQuestion?.id] as string[]).find((answerId: string) => 
+                                currentQuestion?.options?.findIndex((opt: any) => opt.id === answerId) < 4
+                              ) || ""
+                            : ""
+                        }
+                        onChange={(e) => {
+                          const existingAnswers = Array.isArray(selectedAnswers[currentQuestion?.id])
+                            ? selectedAnswers[currentQuestion?.id] as string[]
+                            : [];
+                          
+                          // Remove any existing selections from first row (options 1-4)
+                          const otherRowAnswers = existingAnswers.filter(id => 
+                            currentQuestion?.options?.findIndex((opt: any) => opt.id === id) >= 4
+                          );
 
-          <div className={styles.options}>
-            <Radio.Group value={selectedOption} onChange={handleOptionChange}>
-              <Space direction="vertical">
-                {currentQuestion?.options?.map((option: any) => (
-                  <div className={styles.option}>
-                    <Radio
-                      key={option.id}
-                      value={option.id}
-                      className={styles.option}
-                  >
-                      {option.text}
-                    </Radio>
-                    {option.img && (
-                      <div className={styles.optionImage}>
-                        <img src={option.img} alt="Option" />
-                      </div>
-                    )}
+                          if (e.target.value) {
+                            handleMultiOptionChange([...otherRowAnswers, e.target.value]);
+                          } else {
+                            handleMultiOptionChange([...otherRowAnswers]);
+                          }
+                        }}
+                      >
+                        <option value="">Выберите ответ</option>
+                        {currentQuestion?.options?.slice(0, 4).map((option: any, index: number) => (
+                          <option key={option.id} value={option.id}>
+                            {option.text}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                ))}
-              </Space>
-            </Radio.Group>
+                  <div className={styles.matchingRow}>
+                    <div className={styles.matchingCell}>B)</div>
+                    <div className={styles.matchingCell}>{currentQuestion?.text3 || "Loading..."}</div>
+                    <div className={styles.matchingCell}>
+                      <select 
+                        className={styles.matchingSelect}
+                        value={
+                          Array.isArray(selectedAnswers[currentQuestion?.id])
+                            ? (selectedAnswers[currentQuestion?.id] as string[]).find((answerId: string) => 
+                                currentQuestion?.options?.findIndex((opt: any) => opt.id === answerId) >= 4
+                              ) || ""
+                            : ""
+                        }
+                        onChange={(e) => {
+                          const existingAnswers = Array.isArray(selectedAnswers[currentQuestion?.id])
+                            ? selectedAnswers[currentQuestion?.id] as string[]
+                            : [];
+                          
+                          // Remove any existing selections from second row (options 5-8)
+                          const otherRowAnswers = existingAnswers.filter(id => 
+                            currentQuestion?.options?.findIndex((opt: any) => opt.id === id) < 4
+                          );
+
+                          if (e.target.value) {
+                            handleMultiOptionChange([...otherRowAnswers, e.target.value]);
+                          } else {
+                            handleMultiOptionChange([...otherRowAnswers]);
+                          }
+                        }}
+                      >
+                        <option value="">Выберите ответ</option>
+                        {currentQuestion?.options?.slice(4, 8).map((option: any, index: number) => (
+                          <option key={option.id} value={option.id}>
+                            {option.text}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : currentQuestion?.task_type === 6 ? (
+              <div className={styles.optionsContainer}>
+                <Checkbox.Group 
+                  value={Array.isArray(selectedAnswers[currentQuestion.id]) ? selectedAnswers[currentQuestion.id] as string[] : []}
+                  onChange={(checkedValues: string[]) => {
+                    if (checkedValues.length <= 2) {
+                      handleMultiOptionChange(checkedValues);
+                    }
+                  }}
+                >
+                  <Space direction="vertical" align="start">
+                    {currentQuestion?.options?.map((option: any) => (
+                      <Checkbox key={option.id} value={option.id} className={styles.option}>
+                        {option.text}
+                      </Checkbox>
+                    ))}
+                  </Space>
+                </Checkbox.Group>
+              </div>
+            ) : (
+              <div className={styles.optionsContainer}>
+                <Radio.Group 
+                  value={currentQuestion?.id ? selectedAnswers[currentQuestion.id] : undefined} 
+                  onChange={handleOptionChange}
+                >
+                  <Space direction="vertical" align="start">
+                    {currentQuestion?.options?.map((option: any) => (
+                      <Radio key={option.id} value={option.id} className={styles.option}>
+                        {option.text}
+                        {option.img && (
+                          <div className={styles.optionImage}>
+                            <img src={option.img} alt="Option" />
+                          </div>
+                        )}
+                      </Radio>
+                    ))}
+                  </Space>
+                </Radio.Group>
+              </div>
+            )}
           </div>
         </div>
 

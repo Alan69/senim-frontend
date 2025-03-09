@@ -35,14 +35,18 @@ export type TTest = {
 export type TQuestion = {
   id: string
   text: string
+  text2?: string
+  text3?: string
   options: TOption[]
-  img: string
+  img?: string
+  task_type?: number
+  source_text?: string
 }
 
 export type TOption = {
   id: string
   text: string
-  img: string
+  img?: string
 }
 
 export type TStartTestRequest = {
