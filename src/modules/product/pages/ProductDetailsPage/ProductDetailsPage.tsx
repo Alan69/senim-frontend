@@ -85,9 +85,27 @@ const ProductDetailsPage = () => {
 
     const tests_ids = [...requiredTestIds, ...selectedTestIds];
 
-    if (selectedCount !== MAX_SELECTION) {
-      message.error(`Вы должны выбрать ${MAX_SELECTION} предметов.`);
-      return;
+    // Special product IDs that allow 3-6 subjects
+    const specialProductIds = [
+      '4ce7261c-29e8-4514-94c0-68344010c2d9',
+      '59c6f3a4-14e9-4270-a859-c1131724f51c'
+    ];
+    
+    // Check if current product is one of the special products
+    const isSpecialProduct = specialProductIds.includes(product.id);
+    
+    // For special products, allow 3-6 subjects
+    if (isSpecialProduct) {
+      if (selectedCount < 3 || selectedCount > 6) {
+        message.error(`Вы должны выбрать от 3 до 6 предметов.`);
+        return;
+      }
+    } else {
+      // For regular products, require exactly MAX_SELECTION subjects
+      if (selectedCount !== MAX_SELECTION) {
+        message.error(`Вы должны выбрать ${MAX_SELECTION} предметов.`);
+        return;
+      }
     }
 
     try {
@@ -239,15 +257,46 @@ const ProductDetailsPage = () => {
               </Descriptions.Item>
             </Descriptions>
 
-            {selectedCount !== MAX_SELECTION && (
-              <Alert
-                message={`Выберите ${MAX_SELECTION} дополнительных предметов.`}
-                type="warning"
-                showIcon
-                icon={<ExclamationCircleOutlined />}
-                className={styles.selectionInfo}
-              />
-            )}
+            {/* Special product IDs that allow 3-6 subjects */}
+            {(() => {
+              const specialProductIds = [
+                '4ce7261c-29e8-4514-94c0-68344010c2d9',
+                '59c6f3a4-14e9-4270-a859-c1131724f51c'
+              ];
+              
+              // Check if current product is one of the special products
+              const isSpecialProduct = specialProductIds.includes(product?.id || '');
+              
+              if (isSpecialProduct) {
+                // For special products, check if selection is within 3-6 range
+                if (selectedCount < 3 || selectedCount > 6) {
+                  return (
+                    <Alert
+                      message={`Выберите от 3 до 6 дополнительных предметов.`}
+                      type="warning"
+                      showIcon
+                      icon={<ExclamationCircleOutlined />}
+                      className={styles.selectionInfo}
+                    />
+                  );
+                }
+              } else {
+                // For regular products, check if selection matches MAX_SELECTION
+                if (selectedCount !== MAX_SELECTION) {
+                  return (
+                    <Alert
+                      message={`Выберите ${MAX_SELECTION} дополнительных предметов.`}
+                      type="warning"
+                      showIcon
+                      icon={<ExclamationCircleOutlined />}
+                      className={styles.selectionInfo}
+                    />
+                  );
+                }
+              }
+              
+              return null;
+            })()}
           </>
         )}
 
@@ -365,7 +414,23 @@ const ProductDetailsPage = () => {
               <Button
                 type="primary"
                 onClick={handleStart}
-                disabled={selectedCount !== MAX_SELECTION}
+                disabled={(() => {
+                  const specialProductIds = [
+                    '4ce7261c-29e8-4514-94c0-68344010c2d9',
+                    '59c6f3a4-14e9-4270-a859-c1131724f51c'
+                  ];
+                  
+                  // Check if current product is one of the special products
+                  const isSpecialProduct = specialProductIds.includes(product?.id || '');
+                  
+                  if (isSpecialProduct) {
+                    // For special products, enable button if selection is within 3-6 range
+                    return selectedCount < 3 || selectedCount > 6;
+                  } else {
+                    // For regular products, enable button only if selection matches MAX_SELECTION
+                    return selectedCount !== MAX_SELECTION;
+                  }
+                })()}
                 loading={isProductLoading || isSubjectListLoading}
               >
                 Начать
