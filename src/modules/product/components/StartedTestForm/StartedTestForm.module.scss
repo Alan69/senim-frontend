@@ -370,6 +370,26 @@
   font-weight: 600;
   color: #595959;
   border: 1px solid #d9d9d9;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+
+  :global {
+    .math-content {
+      display: inline-block;
+      vertical-align: middle;
+      
+      .katex {
+        font-size: 1.1em;
+      }
+      
+      .katex-display {
+        margin: 1em 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+  }
 }
 
 .options {
@@ -390,6 +410,18 @@
   font-size: 18px;
   &:hover {
     background: #f0f0f0;
+  }
+
+  :global {
+    .math-content {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 8px;
+      
+      .katex {
+        font-size: 1.1em;
+      }
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import { TimerContext } from "App";
 import cn from "classnames";
 import { ReactComponent as IconArrow } from "assets/icons/arrow-left.svg";
 import { ModalFinishTest } from "../ModalFinishTest/ModalFinishTest";
+import MathFormula from 'components/MathFormula/MathFormula';
 
 // Define Option interface
 interface Option {
@@ -325,7 +326,9 @@ const StartedTestForm = ({
                 <p>{currentQuestion?.source_text}</p>
               </div>
             )}
-            <div className={styles.questionText}>{currentQuestion?.text}</div>
+            <div className={styles.questionText}>
+              <MathFormula text={currentQuestion?.text || ''} />
+            </div>
             {currentQuestion?.img && (
               <div className={styles.imageContainer}>
                 <img src={currentQuestion.img} alt="Question" />
@@ -428,7 +431,7 @@ const StartedTestForm = ({
                   <Space direction="vertical" align="start">
                     {currentQuestion?.options?.map((option: any) => (
                       <Checkbox key={option.id} value={option.id} className={styles.option}>
-                        {option.text}
+                        <MathFormula text={option.text} />
                       </Checkbox>
                     ))}
                   </Space>
@@ -443,7 +446,7 @@ const StartedTestForm = ({
                   <Space direction="vertical" align="start">
                     {currentQuestion?.options?.map((option: any) => (
                       <Radio key={option.id} value={option.id} className={styles.option}>
-                        {option.text}
+                        <MathFormula text={option.text} />
                         {option.img && (
                           <div className={styles.optionImage}>
                             <img src={option.img} alt="Option" />
