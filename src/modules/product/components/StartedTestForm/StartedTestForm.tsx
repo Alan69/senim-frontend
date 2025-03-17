@@ -329,6 +329,11 @@ const StartedTestForm = ({
             <div className={styles.questionText}>
               <MathFormula text={currentQuestion?.text || ''} />
             </div>
+
+            <div className={styles.questionText}>
+              <MathFormula text={currentQuestion?.text2 || ''} />
+            </div>
+
             {currentQuestion?.img && (
               <div className={styles.imageContainer}>
                 <img src={currentQuestion.img} alt="Question" />
