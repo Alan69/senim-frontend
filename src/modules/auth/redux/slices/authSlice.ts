@@ -6,12 +6,14 @@ interface AuthState {
   token: string | null;
   refreshToken: string | null;
   user: TUser | null;
+  lastRefreshAttempt: number;
 }
 
 const initialState: AuthState = {
   token: Cookies.get('token') || null,
   refreshToken: Cookies.get('refreshToken') || null,
   user: null,
+  lastRefreshAttempt: 0,
 };
 
 const authSlice = createSlice({
@@ -35,10 +37,14 @@ const authSlice = createSlice({
     setUser: (state, { payload }: PayloadAction<TUser | null>) => {
       state.user = payload;
     },
+    setLastRefreshAttempt: (state, { payload }: PayloadAction<number>) => {
+      state.lastRefreshAttempt = payload;
+    },
     logOut: (state) => {
       state.token = null;
       state.refreshToken = null;
       state.user = null;
+      state.lastRefreshAttempt = 0;
 
       Cookies.remove('token');
       Cookies.remove('refreshToken');

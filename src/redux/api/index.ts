@@ -37,42 +37,52 @@ const baseApi = createApi({
         result.error.status === 403 ||
         result.error.status === 404)
     ) {
-      const refreshToken = (api.getState() as RootState).auth.refreshToken;
+      const lastRefresh = (api.getState() as RootState).auth?.lastRefreshAttempt || 0;
+      const now = Date.now();
+      
+      if (now - lastRefresh > 10000) {
+        const refreshToken = (api.getState() as RootState).auth.refreshToken;
 
-      if (refreshToken) {
-        const refreshResult = await fetchBaseQuery({
-          baseUrl: "https://api.sapatest.com/api/",
-        })(
-          {
-            url: "/token/refresh/",
-            method: "POST",
-            body: { refresh: refreshToken },
-          },
-          api,
-          extraOptions
-        );
-
-        if (refreshResult.data) {
-          const newTokens = refreshResult.data as TTokenResponse;
-          api.dispatch(
-            authActions.setToken({
-              token: newTokens.access,
-              refreshToken: newTokens.refresh,
-            })
+        if (refreshToken) {
+          api.dispatch(authActions.setLastRefreshAttempt(now));
+          
+          const refreshResult = await fetchBaseQuery({
+            baseUrl: "https://api.sapatest.com/api/",
+          })(
+            {
+              url: "/token/refresh/",
+              method: "POST",
+              body: { refresh: refreshToken },
+            },
+            api,
+            extraOptions
           );
 
-          result = await fetchBaseQuery({
-            baseUrl: "https://api.sapatest.com/api/",
-            prepareHeaders: (headers) => {
-              headers.set("Authorization", `Bearer ${newTokens.access}`);
-              return headers;
-            },
-          })(args, api, extraOptions);
+          if (refreshResult.data) {
+            const newTokens = refreshResult.data as TTokenResponse;
+            api.dispatch(
+              authActions.setToken({
+                token: newTokens.access,
+                refreshToken: newTokens.refresh,
+              })
+            );
+
+            result = await fetchBaseQuery({
+              baseUrl: "https://api.sapatest.com/api/",
+              prepareHeaders: (headers) => {
+                headers.set("Authorization", `Bearer ${newTokens.access}`);
+                return headers;
+              },
+            })(args, api, extraOptions);
+          } else {
+            api.dispatch(authActions.logOut());
+          }
         } else {
           api.dispatch(authActions.logOut());
         }
       } else {
-        api.dispatch(authActions.logOut());
+        console.warn("Too many refresh attempts, throttling...");
+        return result;
       }
     }
 
