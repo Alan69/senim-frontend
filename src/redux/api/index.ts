@@ -35,8 +35,7 @@ const baseApi = createApi({
       result.error &&
       (result.error.status === 401 ||
         result.error.status === 403 ||
-        result.error.status === 404 ||
-        result.error.status === 429)
+        result.error.status === 404)
     ) {
       const refreshToken = (api.getState() as RootState).auth.refreshToken;
 
@@ -75,6 +74,11 @@ const baseApi = createApi({
       } else {
         api.dispatch(authActions.logOut());
       }
+    }
+
+    if (result.error && result.error.status === 429) {
+      console.error("Rate limit exceeded. Please wait before retrying.");
+      return result;
     }
 
     return result;
