@@ -59,6 +59,7 @@ export const userApi = baseApi.injectEndpoints({
           console.error('Failed to fetch user data', err);
         }
       },
+      keepUnusedDataFor: 300, // 5 minutes
     }),
     updateUserProfile: build.mutation<TUpdateUser, TUpdateUser>({
       query: ({ username, first_name, last_name, region, school  }) => ({

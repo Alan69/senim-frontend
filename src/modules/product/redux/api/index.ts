@@ -83,6 +83,7 @@ export const productApi = baseApi.injectEndpoints({
 				method: 'GET'
 			}),
 			transformResponse: (response: TProductResponse[]) => response,
+      keepUnusedDataFor: 300,
     }),
     getProductById: build.query<TProductResponse, string | undefined>({
 			query: (id) => ({
@@ -90,6 +91,7 @@ export const productApi = baseApi.injectEndpoints({
 				method: 'GET'
 			}),
 			transformResponse: (response: TProductResponse) => response,
+      keepUnusedDataFor: 300,
     }),
     getSubjectListByProductId: build.query<TSubjectResponse[], string | undefined>({
 			query: (product_id) => ({
