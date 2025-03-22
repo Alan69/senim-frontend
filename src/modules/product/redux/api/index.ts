@@ -5,6 +5,13 @@ export enum ProductType {
   TEACHER = "TEACHER"
 }
 
+export enum ProductActualName {
+  ENT = "ENT",
+  OZP = "OZP",
+  REZERV = "REZERV",
+  ADMIN_SREZ = "ADMIN_SREZ"
+}
+
 type TProductResponse = {
   id: string;
   title: string;
@@ -12,7 +19,8 @@ type TProductResponse = {
   time: number;
   subject_limit: number;
   description: string;
-  product_type: ProductType
+  product_type: ProductType;
+  product_actual_name: ProductActualName;
 }
 
 type TSubject = {

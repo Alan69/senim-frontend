@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { useSignUpMutation } from "modules/auth/redux/api";
-import { Form, Input, Button, message, Typography, Select } from "antd";
+import { Form, Input, Button, message, Typography, Select, Radio } from "antd";
 import { useDispatch } from "react-redux";
 import { authActions } from "modules/auth/redux/slices/authSlice";
 import styles from "./SignUpPage.module.scss";
 import { useGetRegionListQuery } from "../../../../redux/api/regionsApi";
 import InputMask from "react-input-mask";
+import { useState } from "react";
 
 const { Option } = Select;
 
@@ -14,6 +15,7 @@ const { Title } = Typography;
 const SignUpPage = () => {
   const dispatch = useDispatch();
   const [signUp, { isLoading }] = useSignUpMutation();
+  const [userType, setUserType] = useState("STUDENT");
 
   const { data: regions, isLoading: isRegionsLoading } =
     useGetRegionListQuery();
@@ -24,10 +26,18 @@ const SignUpPage = () => {
       return;
     }
 
+    // Validate that students select a grade
+    if (values.user_type === "STUDENT" && !values.grade) {
+      message.error("Ученики должны выбрать класс!");
+      return;
+    }
+
     try {
       const response = await signUp({
         ...values,
         region: values.region,
+        user_type: values.user_type,
+        grade: values.user_type === "STUDENT" ? values.grade : null,
       });
       // @ts-ignore
       const { access: token, refresh: refreshToken } = response.data;
@@ -39,6 +49,10 @@ const SignUpPage = () => {
         "Ошибка регистрации. Пожалуйста, проверьте введенные данные."
       );
     }
+  };
+
+  const handleUserTypeChange = (e: any) => {
+    setUserType(e.target.value);
   };
 
   return (
@@ -53,7 +67,43 @@ const SignUpPage = () => {
             layout="vertical"
             requiredMark={false}
             className={styles.form}
+            initialValues={{ user_type: "STUDENT" }}
           >
+            <Form.Item
+              name="user_type"
+              label="Тип пользователя"
+              rules={[
+                {
+                  required: true,
+                  message: "Пожалуйста, выберите тип пользователя!",
+                },
+              ]}
+            >
+              <Radio.Group onChange={handleUserTypeChange}>
+                <Radio value="STUDENT">Ученик</Radio>
+                <Radio value="TEACHER">Учитель</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            {userType === "STUDENT" && (
+              <Form.Item
+                name="grade"
+                label="Класс"
+                rules={[
+                  {
+                    required: true,
+                    message: "Пожалуйста, выберите класс!",
+                  },
+                ]}
+              >
+                <Select placeholder="Выберите класс">
+                  <Option value="4">4 класс</Option>
+                  <Option value="9">9 класс</Option>
+                  <Option value="11">11 класс</Option>
+                </Select>
+              </Form.Item>
+            )}
+
             <Form.Item
               name="username"
               label="ИИН"

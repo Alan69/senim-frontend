@@ -2,6 +2,23 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { TUser } from '../../../user/redux/slices/api';
 
+export interface User {
+  id: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  region: number;
+  school: string;
+  balance: number;
+  is_staff: boolean;
+  is_student: boolean;
+  is_teacher: boolean;
+  user_type: string;
+  grade: string | null;
+  test_is_started: boolean;
+  subject_ids: string[];
+}
+
 interface AuthState {
   token: string | null;
   refreshToken: string | null;

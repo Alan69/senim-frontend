@@ -11,6 +11,8 @@ export type TUser = {
   referral_link: any
   referral_bonus: string
   test_is_started: boolean
+  user_type: string
+  grade: string
 }
 
 export type TUserData = {

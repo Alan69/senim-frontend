@@ -21,22 +21,33 @@ const ProductList = () => {
     );
   }
 
-  const studentProducts = products?.filter(
-    (product) => product.product_type === "STUDENT"
-  );
-  const teacherProducts = products?.filter(
-    (product) => product.product_type === "TEACHER"
-  );
+  // Products are already filtered by backend based on user type and grade
+  const filteredProducts = products || [];
+
+  // Get appropriate section title based on user type
+  const getSectionTitle = () => {
+    if (user?.user_type === "TEACHER") {
+      return "Для учителей";
+    } else {
+      if (user?.grade === "11") {
+        return "ЕНТ";
+      } else if (user?.grade === "4" || user?.grade === "9") {
+        return `Срезы для ${user.grade} класса`;
+      } else {
+        return "Продукты";
+      }
+    }
+  };
 
   return (
     <section className={styles.section}>
-      {studentProducts && studentProducts?.length > 0 && (
+      {filteredProducts && filteredProducts.length > 0 && (
         <>
           <Title level={1} className={styles.sectionTitle}>
-            Ученикам
+            {getSectionTitle()}
           </Title>
           <div className={styles.product}>
-            {studentProducts?.map((product) => (
+            {filteredProducts.map((product) => (
               <div key={product.id} className={styles.product__item}>
                 <div className={styles.product__item__content}>
                   <div className={styles.product__item__descr}>
@@ -63,50 +74,7 @@ const ProductList = () => {
                     }
                   }}
                 >
-                  Пройти онлайн
-                  {/* <IconTest /> */}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {teacherProducts && teacherProducts?.length > 0 && (
-        <>
-          <Title level={1} className={styles.sectionTitle}>
-            Учителям
-          </Title>
-          <div className={styles.product}>
-            {teacherProducts?.map((product) => (
-              <div key={product.id} className={styles.product__item}>
-                <div className={styles.product__item__content}>
-                  <div className={styles.product__item__descr}>
-                    <h3 className={styles.product__item__title}>
-                      {product.title}
-                    </h3>
-                    <div className={styles.product__item__subtitle}>
-                      {product.description}
-                    </div>
-                  </div>
-                </div>
-                <Link
-                  to={
-                    !user?.test_is_started
-                      ? `/product/${product.id}`
-                      : `/product/${productId}`
-                  }
-                  className={styles.product__item__button}
-                  onClick={() => {
-                    if (user?.test_is_started) {
-                      message.warning(
-                        "Вы уже начали тест! Завершите его, чтобы начать другой!"
-                      );
-                    }
-                  }}
-                >
-                  Пройти онлайн
-                  {/* <IconTest /> */}
+                  {user?.user_type === "TEACHER" ? "Открыть" : "Пройти онлайн"}
                 </Link>
               </div>
             ))}
