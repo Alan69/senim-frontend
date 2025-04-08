@@ -12,6 +12,7 @@ import { ru } from "date-fns/locale";
 import { useLazyGetAuthUserQuery } from "modules/user/redux/slices/api";
 import { useGetCompletedTestByIdQuery } from "modules/competed-test/redux/api";
 import TabPane from "antd/es/tabs/TabPane";
+import MathFormula from "components/MathFormula/MathFormula";
 
 const { Title, Text } = Typography;
 
@@ -406,7 +407,7 @@ export const CompletedTestDetailsPage = () => {
                             level={4}
                             style={{ marginBottom: "16px", color: "#1890ff" }}
                           >
-                            {question.question_text}
+                            <MathFormula text={question.question_text} />
                           </Title>
 
                           {(question.selected_option === null || question.selected_option.length === 0) && (
@@ -459,7 +460,7 @@ export const CompletedTestDetailsPage = () => {
                                           )}
                                         </Col>
                                         <Col flex="auto">
-                                          <Text>{option.text}</Text>
+                                          <MathFormula text={option.text} />
                                         </Col>
                                       </Row>
                                     </Card>
@@ -481,113 +482,6 @@ export const CompletedTestDetailsPage = () => {
             </Tabs>
           </Card>
         </Tabs.TabPane>
-
-        {/* <Tabs.TabPane
-          tab={
-            <span>
-              <FileSearchOutlined /> Работа над ошибками
-            </span>
-          }
-          key="3"
-        >
-          <Card
-            title={
-              <Title level={4} style={{ color: "#1890ff" }}>
-                Работа над ошибками
-              </Title>
-            }
-            bordered={false}
-            style={{
-              background: "#f9f9f9",
-              borderRadius: "8px",
-              padding: "16px",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Tabs defaultActiveKey="0">
-              {data?.product.tests.map((el, index) => (
-                <TabPane tab={el.title} key={index}>
-                  <Tabs defaultActiveKey="1">
-                    {el.questions.map((question, idx) => (
-                      <TabPane tab={`Вопрос ${idx + 1}`} key={idx}>
-                        <Typography.Title level={3}>
-                          Предмет - {el.title}
-                        </Typography.Title>
-                        <Typography.Title level={4}>
-                          Вопрос - {question.question_text}
-                        </Typography.Title>
-
-                        {question.selected_option === null && (
-                          <Typography.Title level={5} type="warning">
-                            Вы не выбрали вариант ответа!
-                          </Typography.Title>
-                        )}
-
-                        <Row gutter={[16, 16]}>
-                          {question?.all_options?.length > 0 ? (
-                            question.all_options.map((option) => {
-                              const isSelected =
-                                question.selected_option?.id === option.id;
-                              const isCorrect = option.is_correct;
-
-                              return (
-                                <Col span={24} key={option.id}>
-                                  <Card
-                                    style={{
-                                      border: isCorrect
-                                        ? "1px solid #52c41a"
-                                        : isSelected
-                                        ? "1px solid #ff4d4f"
-                                        : "1px solid #e0e0e0",
-                                      backgroundColor: isCorrect
-                                        ? "#e6ffed"
-                                        : isSelected
-                                        ? "#fff1f0"
-                                        : "#f9f9f9",
-                                    }}
-                                  >
-                                    <Row align="middle">
-                                      <Col flex="40px">
-                                        {isCorrect ? (
-                                          <CheckCircleOutlined
-                                            style={{
-                                              color: "#52c41a",
-                                              fontSize: "18px",
-                                            }}
-                                          />
-                                        ) : (
-                                          <CloseCircleOutlined
-                                            style={{
-                                              color: "#ff4d4f",
-                                              fontSize: "18px",
-                                            }}
-                                          />
-                                        )}
-                                      </Col>
-                                      <Col flex="auto">
-                                        <Typography.Text>
-                                          {option.text}
-                                        </Typography.Text>
-                                      </Col>
-                                    </Row>
-                                  </Card>
-                                </Col>
-                              );
-                            })
-                          ) : (
-                            <Typography.Title level={5}>
-                              Нет доступных вариантов ответа.
-                            </Typography.Title>
-                          )}
-                        </Row>
-                      </TabPane>
-                    ))}
-                  </Tabs>
-                </TabPane>
-              ))}
-            </Tabs>
-          </Card>
-        </Tabs.TabPane> */}
       </Tabs>
     </div>
   );
