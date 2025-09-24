@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { ConfigProvider } from "antd"; // Импорт ConfigProvider для кастомизации темы
 
 import "./styles/style.css";
-import store from "./redux/store.ts";
+import store from "./redux/store";
 import theme from "./themeConfig"; // Импорт вашей темы
 import "./global.css";
 

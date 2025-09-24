@@ -15,14 +15,17 @@ const LoginPage = () => {
   const onFinish = async (values: { username: string; password: string }) => {
     try {
       const response = await login(values);
+      console.log('Login response:', response);
 
       // @ts-ignore
       const { access: token, refresh: refreshToken } = response.data;
+      console.log('Extracted tokens:', { token, refreshToken });
 
       dispatch(authActions.setToken({ token, refreshToken }));
       navigate("/product/list");
       message.success("Авторизация прошла успешно!");
     } catch (error) {
+      console.error('Login error:', error);
       message.error(
         "Вход в систему не удался. Пожалуйста, проверьте свои учетные данные."
       );

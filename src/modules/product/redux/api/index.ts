@@ -12,7 +12,7 @@ export enum ProductActualName {
   ADMIN_SREZ = "ADMIN_SREZ"
 }
 
-type TProductResponse = {
+export type TProductResponse = {
   id: string;
   title: string;
   sum: number;
@@ -23,13 +23,13 @@ type TProductResponse = {
   product_actual_name: ProductActualName;
 }
 
-type TSubject = {
+export type TSubject = {
   id: string;
   title: string;
   is_required: boolean;
 }
 
-type TSubjectResponse = {
+export type TSubjectResponse = {
   grade: string;
   tests: TSubject[];
 }
