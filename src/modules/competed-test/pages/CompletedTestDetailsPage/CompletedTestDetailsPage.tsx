@@ -360,6 +360,94 @@ export const CompletedTestDetailsPage = () => {
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             }}
           >
+            {/* Error Summary */}
+            <Row gutter={[16, 16]} style={{ marginBottom: "24px" }}>
+              <Col span={8}>
+                <Card
+                  size="small"
+                  style={{
+                    background: "#fff2f0",
+                    border: "1px solid #ffccc7",
+                    textAlign: "center",
+                  }}
+                >
+                  <Title level={3} style={{ color: "#ff4d4f", margin: 0 }}>
+                    {inCorrectAnswers}
+                  </Title>
+                  <Text style={{ color: "#ff4d4f" }}>Неправильных ответов</Text>
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  size="small"
+                  style={{
+                    background: "#e6ffed",
+                    border: "1px solid #b7eb8f",
+                    textAlign: "center",
+                  }}
+                >
+                  <Title level={3} style={{ color: "#52c41a", margin: 0 }}>
+                    {correctAnswers}
+                  </Title>
+                  <Text style={{ color: "#52c41a" }}>Правильных ответов</Text>
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  size="small"
+                  style={{
+                    background: "#f6ffed",
+                    border: "1px solid #d9f7be",
+                    textAlign: "center",
+                  }}
+                >
+                  <Title level={3} style={{ color: "#389e0d", margin: 0 }}>
+                    {percentageCorrectAnswers.toFixed(1)}%
+                  </Title>
+                  <Text style={{ color: "#389e0d" }}>Точность</Text>
+                </Card>
+              </Col>
+            </Row>
+
+            <div style={{ marginBottom: "16px" }}>
+              <Text style={{ fontSize: "16px", color: "#595959" }}>
+                В этом разделе вы можете просмотреть все вопросы теста, увидеть свои ответы и правильные варианты. 
+                Это поможет вам понять, где были допущены ошибки, и улучшить свои знания.
+              </Text>
+            </div>
+
+            {/* Legend */}
+            <div style={{ 
+              marginBottom: "20px", 
+              padding: "12px", 
+              background: "#f0f2f5", 
+              borderRadius: "6px",
+              border: "1px solid #d9d9d9"
+            }}>
+              <Text strong style={{ fontSize: "14px", marginBottom: "8px", display: "block" }}>
+                Обозначения:
+              </Text>
+              <Row gutter={[16, 8]}>
+                <Col span={8}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <CheckCircleOutlined style={{ color: "#52c41a", marginRight: "8px" }} />
+                    <Text style={{ fontSize: "14px" }}>Правильный ответ</Text>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <CloseCircleOutlined style={{ color: "#ff4d4f", marginRight: "8px" }} />
+                    <Text style={{ fontSize: "14px" }}>Неправильный ответ</Text>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <CloseCircleOutlined style={{ color: "#d9d9d9", marginRight: "8px" }} />
+                    <Text style={{ fontSize: "14px" }}>Не отвечено</Text>
+                  </div>
+                </Col>
+              </Row>
+            </div>
             <Tabs defaultActiveKey="0" type="line" tabPosition="top">
               {data?.product.tests.map((el, index) => (
                 <TabPane
@@ -401,14 +489,30 @@ export const CompletedTestDetailsPage = () => {
                             borderRadius: "8px",
                             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
                             marginBottom: "24px",
+                            border: question.selected_option && question.selected_option.length > 0 && 
+                                   question.selected_option.some(option => option.is_correct) 
+                                   ? "2px solid #52c41a" 
+                                   : question.selected_option && question.selected_option.length > 0 
+                                   ? "2px solid #ff4d4f" 
+                                   : "2px solid #d9d9d9"
                           }}
                         >
-                          <Title
-                            level={4}
-                            style={{ marginBottom: "16px", color: "#1890ff" }}
-                          >
-                            <MathFormula text={question.question_text} />
-                          </Title>
+                          <div style={{ marginBottom: "16px" }}>
+                            <Title
+                              level={4}
+                              style={{ marginBottom: "8px", color: "#1890ff" }}
+                            >
+                              Вопрос {idx + 1}
+                            </Title>
+                            <div style={{ 
+                              padding: "12px", 
+                              background: "#f6f8fa", 
+                              borderRadius: "6px",
+                              border: "1px solid #e1e4e8"
+                            }}>
+                              <MathFormula text={question.question_text} />
+                            </div>
+                          </div>
 
                           {(question.selected_option === null || question.selected_option.length === 0) && (
                             <Title level={5} type="warning">

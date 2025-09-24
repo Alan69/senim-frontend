@@ -1,4 +1,3 @@
-import { TUserData } from 'modules/user/redux/slices/api';
 import baseApi from '../../../../redux/api/index';
 
 type TLogin = {
@@ -28,7 +27,7 @@ type TLoginResponse = {
 type TSignUpResponse = {
   access: string;
   refresh: string;
-  user: TUserData;
+  user: any;
 }
 
 export type TTokenResponse = {

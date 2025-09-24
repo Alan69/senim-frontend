@@ -65,7 +65,10 @@ const ProductDetailsPage = () => {
 
   const MAX_SELECTION = product?.subject_limit;
 
-  const handleStart = async () => {
+  const handleStart = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    
     if (!product || !user) {
       message.error("Продукт или данные пользователя не загружены");
       return;
@@ -85,32 +88,16 @@ const ProductDetailsPage = () => {
 
     const tests_ids = [...requiredTestIds, ...selectedTestIds];
 
-    // Special product IDs that allow 3-6 subjects
-    const specialProductIds = [
-      '4ce7261c-29e8-4514-94c0-68344010c2d9',
-      '59c6f3a4-14e9-4270-a859-c1131724f51c'
-    ];
-    
-    // Check if current product is one of the special products
-    const isSpecialProduct = specialProductIds.includes(product.id);
-    
-    // For special products, allow 3-6 subjects
-    if (isSpecialProduct) {
-      if (selectedCount < 3 || selectedCount > 6) {
-        message.error(`Вы должны выбрать от 3 до 6 предметов.`);
-        return;
-      }
-    } else {
-      // For regular products, require exactly MAX_SELECTION subjects
-      if (selectedCount !== MAX_SELECTION) {
-        message.error(`Вы должны выбрать ${MAX_SELECTION} предметов.`);
-        return;
-      }
+    // Allow starting test with any number of subjects (including 0)
+    // Just show a warning if no subjects are selected
+    if (selectedCount === 0) {
+      message.warning("Вы не выбрали ни одного предмета. Тест будет запущен с обязательными предметами.");
     }
 
     try {
+      console.log('Starting test with:', { product_id: product.id, tests_ids });
       const response = await startTest({
-        product_id: id || "",
+        product_id: product.id,
         tests_ids,
       }).unwrap();
 
@@ -132,8 +119,8 @@ const ProductDetailsPage = () => {
             message.success("Время теста успешно сохранено.");
           }
 
+          console.log('Setting testIsStarted to:', authResponse.test_is_started);
           setTestIsStarted(authResponse.test_is_started);
-          window.location.reload();
         } else {
           message.error("Не удалось получить данные пользователя.");
         }
@@ -224,9 +211,7 @@ const ProductDetailsPage = () => {
     >
       <Card className={styles.container}>
         <h2 className={styles.title}>{product?.title}</h2>
-        {testIsStarted ? (
-          ""
-        ) : (
+        {!testIsStarted && (
           <>
             <Paragraph
               className={styles.description}
@@ -259,40 +244,18 @@ const ProductDetailsPage = () => {
 
             {/* Special product IDs that allow 3-6 subjects */}
             {(() => {
-              const specialProductIds = [
-                '4ce7261c-29e8-4514-94c0-68344010c2d9',
-                '59c6f3a4-14e9-4270-a859-c1131724f51c'
-              ];
               
-              // Check if current product is one of the special products
-              const isSpecialProduct = specialProductIds.includes(product?.id || '');
-              
-              if (isSpecialProduct) {
-                // For special products, check if selection is within 3-6 range
-                if (selectedCount < 3 || selectedCount > 6) {
-                  return (
-                    <Alert
-                      message={`Выберите от 3 до 6 дополнительных предметов.`}
-                      type="warning"
-                      showIcon
-                      icon={<ExclamationCircleOutlined />}
-                      className={styles.selectionInfo}
-                    />
-                  );
-                }
-              } else {
-                // For regular products, check if selection matches MAX_SELECTION
-                if (selectedCount !== MAX_SELECTION) {
-                  return (
-                    <Alert
-                      message={`Выберите ${MAX_SELECTION} дополнительных предметов.`}
-                      type="warning"
-                      showIcon
-                      icon={<ExclamationCircleOutlined />}
-                      className={styles.selectionInfo}
-                    />
-                  );
-                }
+              // Subject selection is now optional - show info message
+              if (selectedCount === 0) {
+                return (
+                  <Alert
+                    message="Выберите дополнительные предметы (необязательно). Тест можно начать с любым количеством предметов."
+                    type="info"
+                    showIcon
+                    icon={<ExclamationCircleOutlined />}
+                    className={styles.selectionInfo}
+                  />
+                );
               }
               
               return null;
@@ -414,23 +377,7 @@ const ProductDetailsPage = () => {
               <Button
                 type="primary"
                 onClick={handleStart}
-                disabled={(() => {
-                  const specialProductIds = [
-                    '4ce7261c-29e8-4514-94c0-68344010c2d9',
-                    '59c6f3a4-14e9-4270-a859-c1131724f51c'
-                  ];
-                  
-                  // Check if current product is one of the special products
-                  const isSpecialProduct = specialProductIds.includes(product?.id || '');
-                  
-                  if (isSpecialProduct) {
-                    // For special products, enable button if selection is within 3-6 range
-                    return selectedCount < 3 || selectedCount > 6;
-                  } else {
-                    // For regular products, enable button only if selection matches MAX_SELECTION
-                    return selectedCount !== MAX_SELECTION;
-                  }
-                })()}
+                disabled={false}
                 loading={isProductLoading || isSubjectListLoading}
               >
                 Начать
